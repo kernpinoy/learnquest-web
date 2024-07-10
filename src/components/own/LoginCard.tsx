@@ -41,10 +41,8 @@ const loginFormSchema = z.object({
 export default function LoginCard({
   className,
 }: {
-  className: string | undefined;
+  className?: string | undefined;
 }) {
-  const { pending } = useFormStatus();
-
   // We define form here
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -108,7 +106,7 @@ export default function LoginCard({
           </CardContent>
 
           <CardFooter className="flex justify-between">
-            <Button disabled={pending}>Login</Button>
+            <Button>Login</Button>
           </CardFooter>
         </Card>
       </form>
