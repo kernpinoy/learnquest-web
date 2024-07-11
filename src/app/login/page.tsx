@@ -7,16 +7,11 @@ export const metadata: Metadata = {
   description: "App",
 };
 
-const buttonAction = async () => {
-  "use server";
-  redirect("/dashboard");
-};
-
 export default function LoginScreen() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 h-screen w-fullx">
-      <div className="bg-primary flex flex-col justify-center items-center">
-        <div className="bg-primary-foreground rounded-full p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 md:h-screen w-full">
+      <div className="flex flex-col justify-center items-center">
+        <div className="rounded-full p-4">
           <MountainIcon className="h-12 w-12" />
         </div>
         <h1 className="text-4xl font-bold text-primary-foreground mt-4">
@@ -27,32 +22,9 @@ export default function LoginScreen() {
         </p>
       </div>
 
-      <div className="flex flex-col justify-center items-center">
-        {/* <div className="bg-card p-8 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4">Login</h2>
-          <form action={buttonAction} className="space-y-4">
-            <div>
-              <Label htmlFor="email">Username</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
-          </form>
-        </div> */}
+      <div className="flex flex-col md:justify-center items-center">
         <div className="w-[34rem]">
-          <LoginCard className="bg-primary" />
+          <LoginCard className="shadow-lg" />
         </div>
       </div>
     </div>

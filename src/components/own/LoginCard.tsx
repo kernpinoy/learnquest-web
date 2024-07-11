@@ -1,7 +1,7 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
 import { z } from "zod";
+import { useFormStatus } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -24,35 +24,25 @@ import {
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { PasswordInput } from "~/components/own/PasswordInput";
-
-const loginFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, { message: "Username must be atleast 2 characters." })
-    .min(1, { message: "Username cannot be empty." })
-    .transform((str) => str.trim()),
-  password: z
-    .string()
-    .min(2, { message: "Password must be atleast 2 characters." })
-    .min(1, { message: "Password cannot be empty." })
-    .transform((str) => str.trim()),
-});
+import LoginFormSchema from "~/schemas/LoginFormSchema";
 
 export default function LoginCard({
   className,
 }: {
   className?: string | undefined;
 }) {
+  const { pending } = useFormStatus();
+
   // We define form here
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       username: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
     console.log(values);
   }
 
@@ -106,7 +96,7 @@ export default function LoginCard({
           </CardContent>
 
           <CardFooter className="flex justify-between">
-            <Button>Login</Button>
+            <Button disabled={pending}>Login</Button>
           </CardFooter>
         </Card>
       </form>
