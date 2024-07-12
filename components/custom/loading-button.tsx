@@ -16,7 +16,7 @@ export function ButtonLoading({
   return (
     <Button disabled={isDisabled} {...props}>
       {isDisabled && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-      {!isDisabled ? textNotLoading : textLoading}
+      {isDisabled ? textLoading : textNotLoading}
     </Button>
   );
 }
