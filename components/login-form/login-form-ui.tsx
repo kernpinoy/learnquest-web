@@ -60,7 +60,7 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
                 name="username"
                 fieldType="text"
                 label="Username"
-                placeholder="username"
+                placeholder="shadcn"
               />
 
               <FormField
@@ -68,7 +68,7 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
                 name="password"
                 fieldType="password"
                 label="Password"
-                placeholder="********"
+                placeholder="******"
               />
 
               <ButtonLoading
