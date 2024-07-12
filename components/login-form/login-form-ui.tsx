@@ -12,12 +12,15 @@ import { Form } from "~/components/ui/form";
 import FormField from "~/components/custom/form-field";
 import { toast } from "sonner";
 import { ButtonLoading } from "~/components/custom/loading-button";
+import { useRouter } from "next/navigation";
+import { loginAction } from "~/actions/login-account-action";
 
 interface LoginFormUIProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
   // For button login, prevention of spam
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   // Form creation
   const form = useForm<LoginFormSchemaType>({
@@ -25,20 +28,19 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: LoginFormSchemaType) {
-    const { username, password } = values;
-
+  async function onSubmit(values: LoginFormSchemaType) {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
+    const { type, message } = await loginAction(values);
 
-      if (username === "jeanelle" && password === "toque") {
-        toast.success("Logged in successfully!");
-      } else {
-        toast.error("Logged in failed!");
-      }
-    }, 3000);
+    if (type === "SUCCESS") {
+      setIsLoading(false);
+      toast.success(message);
+      router.push("/admin");
+    } else {
+      setIsLoading(false);
+      toast.error(message);
+    }
   }
 
   return (
