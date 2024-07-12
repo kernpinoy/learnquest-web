@@ -11,8 +11,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { ReactElement } from "react";
-import { AnyTxtRecord } from "dns";
-import { PasswordInput } from "./password-input";
+import { PasswordInput } from "~/components/custom/password-input";
 
 interface FormFieldProps {
   control: Control<any>;

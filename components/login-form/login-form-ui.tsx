@@ -10,8 +10,8 @@ import {
 import { cn } from "~/lib/utils";
 import { Form } from "~/components/ui/form";
 import FormField from "~/components/custom/form-field";
-import { LoadingButton } from "~/components/custom/loading-button";
 import { toast } from "sonner";
+import { ButtonLoading } from "~/components/custom/loading-button";
 
 interface LoginFormUIProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -71,9 +71,12 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
                 placeholder="********"
               />
 
-              <LoadingButton className="mt-3" loading={isLoading}>
-                Log in
-              </LoadingButton>
+              <ButtonLoading
+                className="mt-3"
+                isDisabled={isLoading}
+                textLoading="Please wait..."
+                textNotLoading="Login"
+              />
             </div>
           </form>
         </Form>
