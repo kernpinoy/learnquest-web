@@ -16,12 +16,12 @@ export async function loginAction(
         type: "SUCCESS",
         message: "Successfully logged in.",
       };
-    } else {
-      return {
-        type: "ERROR",
-        message: "Invalid username or password.",
-      };
     }
+
+    return {
+      type: "ERROR",
+      message: "Username or password incorrect. Try again.",
+    };
   } catch (e: any) {
     return {
       type: "ERROR",
