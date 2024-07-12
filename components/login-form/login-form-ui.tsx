@@ -33,6 +33,7 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
 
     const { type, message } = await loginAction(values);
 
+    setIsLoading(false);
     if (type === "SUCCESS") {
       toast.success(message);
       router.push("/admin");
