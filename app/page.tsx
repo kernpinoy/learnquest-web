@@ -1,5 +1,5 @@
 import { Command } from "lucide-react";
-import { Toaster } from "sonner";
+import { Toaster } from "~/components/ui/sonner";
 import LoginFormUI from "~/components/login-form/login-form-ui";
 
 export default function SignIn() {
