@@ -1,17 +1,16 @@
 "use client";
 
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, ReactElement } from "react";
 import { Control, ControllerRenderProps } from "react-hook-form";
+import { PasswordInput } from "~/components/custom/password-input";
 import {
+  FormControl,
   FormField as FormFld,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { ReactElement } from "react";
-import { PasswordInput } from "~/components/custom/password-input";
 
 interface FormFieldProps {
   control: Control<any>;
@@ -32,10 +31,10 @@ interface RenderInputProps {
 function RenderInput({ type, field, placeholder }: RenderInputProps) {
   switch (type) {
     case "password":
-      return <PasswordInput placeholder={placeholder} {...field} />;
+      return <PasswordInput {...field} type={type} placeholder={placeholder} />;
 
     default:
-      return <Input type={type} placeholder={placeholder} {...field} />;
+      return <Input {...field} type={type} placeholder={placeholder} />;
   }
 }
 
