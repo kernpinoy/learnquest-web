@@ -8,8 +8,8 @@ export const env = createEnv({
   },
   client: {},
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
-  runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    MIGRATION_DATABASE_URL: process.env.MIGRATION_DATABASE_URL,
-  },
+  experimental__runtimeEnv: {},
+
+  skipValidation: !!process.env.SKIP_VALIDATION,
+  emptyStringAsUndefined: true,
 });
