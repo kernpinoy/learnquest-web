@@ -5,6 +5,9 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     MIGRATION_DATABASE_URL: z.string().url(),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
   },
   client: {},
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
