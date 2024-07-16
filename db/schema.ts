@@ -1,7 +1,18 @@
-import { pgTable, integer, text } from "drizzle-orm/pg-core";
+import { pgTable, integer, text, timestamp } from "drizzle-orm/pg-core";
 
-export const postsTable = pgTable("posts", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity({ startWith: 1 }),
-  author: text("author"),
-  post: text("post"),
+export const usersTable = pgTable("users", {
+  id: text("id").primaryKey(),
+  userName: text("username").notNull().unique(),
+  hashedPassword: text("hashed_password"),
+});
+
+export const sessionTable = pgTable("session", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  expiresAt: timestamp("expires_at", {
+    withTimezone: true,
+    mode: "date",
+  }).notNull(),
 });
