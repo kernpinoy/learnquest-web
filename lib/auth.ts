@@ -2,6 +2,7 @@ import { Lucia } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "~/db";
 import { roleEnum, sessionTable, usersTable } from "~/db/schema";
+import { env } from "~/env";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, usersTable);
 
@@ -12,7 +13,7 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: env.NODE_ENV === "production",
     },
   },
   getUserAttributes: (attributes) => {
