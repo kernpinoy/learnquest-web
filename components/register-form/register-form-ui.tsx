@@ -8,6 +8,9 @@ import { cn } from "~/lib/utils";
 import { Form } from "~/components/ui/form";
 import FormField from "~/components/custom/form-field";
 import { ButtonLoading } from "~/components/custom/loading-button";
+import Link from "next/link";
+import registerAccountAction from "~/actions/register-account-action";
+import { toast } from "sonner";
 
 interface RegisterFormUIProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -21,8 +24,16 @@ export default function RegisterFormUI({
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: RegisterFormSchemaType) {
-    console.log(values);
+  // form on submit
+  async function onSubmit(values: RegisterFormSchemaType) {
+    const result = await registerAccountAction(values);
+
+    if (result) {
+      if (result.type === "error") {
+        toast.error(result.message);
+        return;
+      }
+    }
   }
 
   return (
@@ -63,6 +74,14 @@ export default function RegisterFormUI({
 
             <FormField
               control={form.control}
+              name="username"
+              fieldType="text"
+              label="Username"
+              placeholder="j3n3ll3"
+            />
+
+            <FormField
+              control={form.control}
               name="password"
               fieldType="password"
               label="Password"
@@ -86,6 +105,16 @@ export default function RegisterFormUI({
           </div>
         </form>
       </Form>
+
+      <p className="px-8 text-center text-sm text-muted-foreground">
+        Want to login?{" "}
+        <Link
+          href="/login"
+          className="underline underline-offset-4 hover:text-primary"
+        >
+          Click here.
+        </Link>
+      </p>
     </div>
   );
 }

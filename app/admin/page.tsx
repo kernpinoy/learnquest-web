@@ -19,6 +19,7 @@ export default async function TestPage() {
   // TODO: Find a better way to logout
   return (
     <div>
+      <div>admin page</div>
       <form action={logoutAccountAction}>
         <Button>Logout</Button>
       </form>

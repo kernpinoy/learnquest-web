@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
@@ -27,20 +28,18 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
   });
 
   async function onSubmit(values: LoginFormSchemaType) {
-    const { type, message, redirectTo } = await loginAccountAction(values);
+    const result = await loginAccountAction(values);
 
-    if (type === "error") {
-      toast.error(message);
-      return;
-    }
+    if (result) {
+      if (result.type == "invalid") {
+        toast.warning(result.message);
+        return;
+      }
 
-    if (type === "invalid") {
-      toast.warning(message);
-      return;
-    }
-
-    if (type === "success") {
-      router.push(`/${redirectTo}`);
+      if (result.type == "error") {
+        toast.error(result.message);
+        return;
+      }
     }
   }
 
@@ -83,6 +82,16 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
             </div>
           </form>
         </Form>
+
+        <p className="px-8 text-center text-sm text-muted-foreground">
+          Want to register?{" "}
+          <Link
+            href="/register"
+            className="underline underline-offset-4 hover:text-primary"
+          >
+            Click here.
+          </Link>
+        </p>
       </div>
     </>
   );

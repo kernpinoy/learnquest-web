@@ -7,16 +7,9 @@ import { lucia } from "~/lib/auth";
 import { db } from "~/db";
 import { eq } from "drizzle-orm";
 import { usersTable } from "~/db/schema";
+import { redirect } from "next/navigation";
 
-interface ActionResult {
-  type: "success" | "invalid" | "error";
-  redirectTo?: string;
-  message: string;
-}
-
-export async function loginAccountAction(
-  values: LoginFormSchemaType
-): Promise<ActionResult> {
+export async function loginAccountAction(values: LoginFormSchemaType) {
   const { username, password } = values;
 
   // Check if username do exist
@@ -44,16 +37,13 @@ export async function loginAccountAction(
   }
 
   // Check for invalid password
-  const validPassword = await verify(
-    existingUser?.hashedPassword as string | Buffer,
-    password,
-    {
-      memoryCost: 19456,
-      timeCost: 2,
-      outputLen: 32,
-      parallelism: 1,
-    }
-  );
+  const validPassword = await verify(existingUser?.hashedPassword, password, {
+    salt: Buffer.from(existingUser.salt),
+    memoryCost: 19456,
+    timeCost: 2,
+    outputLen: 32,
+    parallelism: 1,
+  });
 
   // show invalid password
   if (!validPassword) {
@@ -71,9 +61,5 @@ export async function loginAccountAction(
     sessionCookie.attributes
   );
 
-  return {
-    type: "success",
-    message: "Login successful.",
-    redirectTo: existingUser.role,
-  };
+  return redirect(`/${existingUser.role}`);
 }
