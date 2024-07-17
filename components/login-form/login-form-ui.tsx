@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { loginAction } from "~/actions/login-account-action";
+import { loginAccountAction } from "~/actions/login-account-action";
 import FormField from "~/components/custom/form-field";
 import { ButtonLoading } from "~/components/custom/loading-button";
 import { Form } from "~/components/ui/form";
@@ -27,13 +27,20 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
   });
 
   async function onSubmit(values: LoginFormSchemaType) {
-    const { type, message } = await loginAction(values);
+    const { type, message, redirectTo } = await loginAccountAction(values);
 
-    if (type === "SUCCESS") {
-      toast.success(message);
-      router.push("/admin");
-    } else {
+    if (type === "error") {
       toast.error(message);
+      return;
+    }
+
+    if (type === "invalid") {
+      toast.warning(message);
+      return;
+    }
+
+    if (type === "success") {
+      router.push(`/${redirectTo}`);
     }
   }
 

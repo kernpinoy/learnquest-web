@@ -1,7 +1,15 @@
 import { Command } from "lucide-react";
+import { redirect } from "next/navigation";
 import LoginFormUI from "~/components/login-form/login-form-ui";
+import { validateRequest } from "~/lib/validate-request";
 
-export default function SignIn() {
+export default async function SignIn() {
+  const { user } = await validateRequest();
+
+  if (user) {
+    return redirect(`/${user.role}`);
+  }
+
   return (
     <>
       <div className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -12,7 +20,6 @@ export default function SignIn() {
             LearnQuest
           </div>
         </div>
-
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-left">

@@ -1,9 +1,13 @@
-import { pgTable, integer, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+// Use enums for roles
+export const roleEnum = pgEnum("role", ["admin", "teacher"]);
 
 export const usersTable = pgTable("users", {
   id: text("id").primaryKey(),
   userName: text("username").notNull().unique(),
-  hashedPassword: text("hashed_password"),
+  hashedPassword: text("hashed_password").notNull(),
+  role: roleEnum("role").notNull().default("teacher"),
 });
 
 export const sessionTable = pgTable("session", {
