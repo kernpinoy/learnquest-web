@@ -31,10 +31,10 @@ interface RenderInputProps {
 function RenderInput({ type, field, placeholder }: RenderInputProps) {
   switch (type) {
     case "password":
-      return <PasswordInput {...field} type={type} placeholder={placeholder} />;
+      return <PasswordInput placeholder={placeholder} {...field} />;
 
     default:
-      return <Input {...field} type={type} placeholder={placeholder} />;
+      return <Input type={type} placeholder={placeholder} {...field} />;
   }
 }
 

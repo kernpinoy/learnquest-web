@@ -1,9 +1,9 @@
 import { Command } from "lucide-react";
 import { redirect } from "next/navigation";
-import LoginFormUI from "~/components/login-form/login-form-ui";
+import RegisterFormUI from "~/components/register-form/register-form-ui";
 import { validateRequest } from "~/lib/validate-request";
 
-export default async function SignIn() {
+export default async function RegisterPage() {
   const { user } = await validateRequest();
 
   if (user) {
@@ -23,7 +23,7 @@ export default async function SignIn() {
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-left">
-              <LoginFormUI />
+              <RegisterFormUI />
             </div>
           </div>
         </div>

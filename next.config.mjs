@@ -6,6 +6,18 @@ const jiti = createJiti(fileURLToPath(import.meta.url));
 jiti("./env");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ["@node-rs/argon2"],
+  },
+  rewrites: async () => {
+    return [
+      {
+        source: "/login",
+        destination: "/",
+      },
+    ];
+  },
+};
 
 export default nextConfig;
