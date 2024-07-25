@@ -61,5 +61,5 @@ export async function loginAccountAction(values: LoginFormSchemaType) {
     sessionCookie.attributes
   );
 
-  return redirect(`/${existingUser.role}`);
+  return redirect(`/dashboard/${existingUser.role}`);
 }

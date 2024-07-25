@@ -1,13 +1,13 @@
 import { Command } from "lucide-react";
 import { redirect } from "next/navigation";
-import RegisterFormUI from "~/components/register-form/register-form-ui";
+import LoginFormUI from "~/components/login-form/login-form-ui";
 import { validateRequest } from "~/lib/validate-request";
 
-export default async function RegisterPage() {
+export default async function LoginPage() {
   const { user } = await validateRequest();
 
   if (user) {
-    return redirect(`/${user.role}`);
+    return redirect(`/dashboard/${user.role}`);
   }
 
   return (
@@ -23,7 +23,7 @@ export default async function RegisterPage() {
         <div className="lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-left">
-              <RegisterFormUI />
+              <LoginFormUI />
             </div>
           </div>
         </div>

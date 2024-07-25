@@ -69,5 +69,5 @@ export default async function registerAccountAction({
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return redirect("/admin");
+  return redirect("/dashboard/teacher");
 }
