@@ -7,7 +7,7 @@ export default async function SignIn() {
   const { user } = await validateRequest();
 
   if (user) {
-    return redirect(`/${user.role}`);
+    return redirect(`/dashboard/${user.role}`);
   }
 
   return (
