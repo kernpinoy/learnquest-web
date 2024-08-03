@@ -19,6 +19,12 @@ export const teachersInfoTable = pgTable("teachers_info", {
   userId: text("user_id")
     .notNull()
     .references(() => usersTable.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const sessionTable = pgTable("session", {
