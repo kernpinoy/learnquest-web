@@ -26,7 +26,7 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "~/hooks/use-sidebar";
 
 type Submenu = {
   href: string;

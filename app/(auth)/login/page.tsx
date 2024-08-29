@@ -1,15 +1,7 @@
 import { Command } from "lucide-react";
-import { redirect } from "next/navigation";
 import LoginFormUI from "~/components/login-form/login-form-ui";
-import { validateRequest } from "~/lib/validate-request";
 
 export default async function LoginPage() {
-  const { user } = await validateRequest();
-
-  if (user) {
-    return redirect(`/dashboard/${user.role}`);
-  }
-
   return (
     <>
       <div className="container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">

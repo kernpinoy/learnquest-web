@@ -1,10 +1,10 @@
 import { Lucia } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { db } from "~/db";
-import { roleEnum, sessionTable, usersTable } from "~/db/schema";
+import { db } from "~/server/db";
 import { env } from "~/env";
+import { sessions, userRole, users } from "~/server/db/schema";
 
-const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, usersTable);
+const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
@@ -12,7 +12,6 @@ export const lucia = new Lucia(adapter, {
     // since Next.js doesn't allow Lucia to extend cookie expiration when rendering pages
     expires: false,
     attributes: {
-      // set to `true` when using HTTPS
       secure: env.NODE_ENV === "production",
     },
   },
@@ -34,5 +33,5 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   username: string;
-  role: (typeof roleEnum.enumValues)[number];
+  role: (typeof userRole.enumValues)[number];
 }

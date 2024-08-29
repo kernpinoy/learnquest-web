@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "~/hooks/use-sidebar";
 
 export function SidebarToggle() {
   const { isOpen, toggleSidebar } = useSidebar();

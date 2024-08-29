@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 // Teacher register form schema
-export const registerFormSchema = z
+export const addTeacherFormSchema = z
   .object({
     firstName: z
       .string()
@@ -29,13 +29,13 @@ export const registerFormSchema = z
   });
 
 // Infer type of registration form
-export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
+export type AddTeacherFormType = z.infer<typeof addTeacherFormSchema>;
 
 // Export resolver
-export const resolver = zodResolver(registerFormSchema);
+export const resolver = zodResolver(addTeacherFormSchema);
 
 // Export default values
-export const defaultValues: RegisterFormSchemaType = {
+export const defaultValues: AddTeacherFormType = {
   firstName: "",
   middleName: "",
   lastName: "",

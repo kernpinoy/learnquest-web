@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "~/lib/utils";
-import { ThemeProvider } from "~/components/theme-provider";
+import { ThemeProvider } from "~/providers/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
+import ReactQueryProvider from "~/providers/react-query-client";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,15 +23,16 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-
+        <ReactQueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ReactQueryProvider>
         <Toaster richColors closeButton position="top-right" />
       </body>
     </html>

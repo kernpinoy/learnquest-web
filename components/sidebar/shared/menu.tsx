@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import getMenuList from "~/lib/lists";
 import { cn } from "~/lib/utils";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "~/hooks/use-sidebar";
 import {
   Tooltip,
   TooltipContent,
@@ -15,7 +15,6 @@ import { Ellipsis, LogOut } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { CollapseMenuButton } from "./collapse-menu-button";
-import logoutAccountAction from "~/actions/logout-account-action";
 
 interface MenuProps {
   isAdmin?: boolean;
@@ -113,7 +112,6 @@ export default function Menu({ isAdmin = true }: MenuProps) {
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      logoutAccountAction();
                     }}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"

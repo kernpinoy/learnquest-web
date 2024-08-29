@@ -14,7 +14,7 @@ import { Ellipsis } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { CollapseMenuButton } from "./collapse-menu-button";
-import { useSidebar } from "./sidebar-context";
+import { useSidebar } from "~/providers/useSidebar";
 
 interface MenuProps {
   isAdmin?: boolean;

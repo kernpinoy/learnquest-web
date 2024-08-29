@@ -7,9 +7,6 @@ jiti("./env");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["@node-rs/argon2"],
-  },
   rewrites: async () => {
     return [
       {
@@ -26,6 +23,9 @@ const nextConfig = {
         port: "",
       },
     ],
+  },
+  experimental: {
+    serverComponentsExternalPackages: ["@node-rs/argon2"],
   },
 };
 

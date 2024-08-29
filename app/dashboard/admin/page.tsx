@@ -1,16 +1,25 @@
-import TeachersCard from "~/components/custom/teachers-card";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import TeachersArea from "~/components/custom/teachers-area";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
-import { Button } from "~/components/ui/button";
+import { getTeacherDetails } from "~/server/functions/teachers";
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["teachers-card"],
+    queryFn: getTeacherDetails,
+  });
+
   return (
     <ContentLayout title="Dashboard">
-      <div className="flex justify-end mb-4">
-        <Button>Add teacher</Button>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <TeachersCard />
-      </div>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <TeachersArea />
+      </HydrationBoundary>
     </ContentLayout>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "~/lib/utils";
-import { useSidebar } from "~/components/sidebar/shared/sidebar-context";
+import { useSidebar } from "~/hooks/use-sidebar";
 import { SidebarToggle } from "~/components/sidebar/shared/sidebar-toggle";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";

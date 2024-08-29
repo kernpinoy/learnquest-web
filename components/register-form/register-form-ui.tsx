@@ -9,7 +9,6 @@ import { Form } from "~/components/ui/form";
 import FormField from "~/components/custom/form-field";
 import { ButtonLoading } from "~/components/custom/loading-button";
 import Link from "next/link";
-import registerAccountAction from "~/actions/register-account-action";
 import { toast } from "sonner";
 
 interface RegisterFormUIProps extends HTMLAttributes<HTMLDivElement> {}
@@ -26,14 +25,13 @@ export default function RegisterFormUI({
 
   // form on submit
   async function onSubmit(values: RegisterFormSchemaType) {
-    const result = await registerAccountAction(values);
-
-    if (result) {
-      if (result.type === "error") {
-        toast.error(result.message);
-        return;
-      }
-    }
+    // const result = await registerAccountAction(values);
+    // if (result) {
+    //   if (result.type === "error") {
+    //     toast.error(result.message);
+    //     return;
+    //   }
+    // }
   }
 
   return (
@@ -100,7 +98,7 @@ export default function RegisterFormUI({
               className="mt-3"
               isDisabled={form.formState.isSubmitting}
               textLoading="Please wait..."
-              textNotLoading="Login"
+              textNotLoading="Register"
             />
           </div>
         </form>
@@ -111,6 +109,7 @@ export default function RegisterFormUI({
         <Link
           href="/login"
           className="underline underline-offset-4 hover:text-primary"
+          shallow={true}
         >
           Click here.
         </Link>

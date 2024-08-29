@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import Sidebar from "../shared/sidebar";
-import { useSidebar } from "../shared/sidebar-context";
+import { useSidebar } from "~/hooks/use-sidebar";
 import { cn } from "~/lib/utils";
 
 export default function AdminSidebarLayout({

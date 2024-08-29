@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { loginAccountAction } from "~/actions/login-account-action";
 import FormField from "~/components/custom/form-field";
 import { ButtonLoading } from "~/components/custom/loading-button";
 import { Form } from "~/components/ui/form";
@@ -28,19 +27,9 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
   });
 
   async function onSubmit(values: LoginFormSchemaType) {
-    const result = await loginAccountAction(values);
-
-    if (result) {
-      if (result.type == "invalid") {
-        toast.warning(result.message);
-        return;
-      }
-
-      if (result.type == "error") {
-        toast.error(result.message);
-        return;
-      }
-    }
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("password", values.password);
   }
 
   return (
@@ -82,16 +71,6 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
             </div>
           </form>
         </Form>
-
-        <p className="px-8 text-center text-sm text-muted-foreground">
-          Want to register?{" "}
-          <Link
-            href="/register"
-            className="underline underline-offset-4 hover:text-primary"
-          >
-            Click here.
-          </Link>
-        </p>
       </div>
     </>
   );
