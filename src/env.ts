@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-export const env = createEnv({
+const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
@@ -15,3 +15,5 @@ export const env = createEnv({
   skipValidation: !!process.env.SKIP_VALIDATION,
   emptyStringAsUndefined: true,
 });
+
+export default env;
