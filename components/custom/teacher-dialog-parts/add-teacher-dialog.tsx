@@ -5,7 +5,7 @@ import AddTeacherDialogForm from "./add-teacher-dialog-form";
 
 export default function AddTeacherDialog() {
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => {}}>
       <DialogTrigger asChild>
         <Button>Add Teacher</Button>
       </DialogTrigger>

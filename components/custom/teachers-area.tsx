@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Salad, User } from "lucide-react";
+import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { useGetTeacherDetails } from "~/data/use-get-teacher-details";
 import AddTeacherDialog from "./teacher-dialog-parts/add-teacher-dialog";
 import TeachersAreaSkeleton from "../skeletons/teachers-area-skeleton";
 import TeacherActionsDropdown from "./teacher-actions-dropdown";
+import { Input } from "../ui/input";
 
 export default function TeachersArea() {
   const { data: teachers, isLoading } = useGetTeacherDetails();
@@ -36,7 +37,8 @@ export default function TeachersArea() {
 
   return (
     <>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between mb-4">
+        <Input className="w-72 lg:w-96" placeholder="Search..." />
         <AddTeacherDialog />
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

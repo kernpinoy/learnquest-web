@@ -15,7 +15,7 @@ import { useRef } from "react";
 export default function AddTeacherDialogForm() {
   // Form creation
   const form = useAddTeacherForm();
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null!);
 
   const { execute, status } = useAction(createTeacher, {
     onSuccess({ data }) {
@@ -28,7 +28,7 @@ export default function AddTeacherDialogForm() {
         toast.dismiss();
         toast.success(data?.success, { duration: 1000, closeButton: false });
         // TODO: Decide to either close this shit, or just reset the form
-        closeRef.current?.click();
+        closeRef.current.click();
         form.reset();
       }
     },
@@ -38,7 +38,7 @@ export default function AddTeacherDialogForm() {
     },
   });
 
-  async function onSubmit(values: AddTeacherFormType) {
+  function onSubmit(values: AddTeacherFormType) {
     execute(values);
   }
 
@@ -52,7 +52,7 @@ export default function AddTeacherDialogForm() {
               name="firstName"
               fieldType="text"
               label="First name"
-              placeholder="Jeanelle"
+              placeholder="John"
             />
 
             <FormField
@@ -60,7 +60,7 @@ export default function AddTeacherDialogForm() {
               name="middleName"
               fieldType="text"
               label="Middle name"
-              placeholder="Dela Cruz"
+              placeholder="Schmoe"
             />
 
             <FormField
@@ -68,7 +68,7 @@ export default function AddTeacherDialogForm() {
               name="lastName"
               fieldType="text"
               label="Last name"
-              placeholder="Toque"
+              placeholder="Smith"
             />
 
             <FormField
@@ -76,7 +76,7 @@ export default function AddTeacherDialogForm() {
               name="username"
               fieldType="text"
               label="Username"
-              placeholder="j3n3ll3"
+              placeholder="username"
             />
 
             <FormField
@@ -97,11 +97,7 @@ export default function AddTeacherDialogForm() {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button
-                  variant="ghost"
-                  aria-disabled={status === "executing"}
-                  ref={closeRef}
-                >
+                <Button variant="ghost" aria-disabled={status === "executing"}>
                   Close
                 </Button>
               </DialogClose>
