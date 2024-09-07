@@ -3,12 +3,9 @@ import { env } from "~/env";
 
 export default defineConfig({
   schema: "./server/db/schema.ts",
-  out: "./supabase/migrations",
+  out: "./migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: env.DATABASE_URL,
-  },
-  migrations: {
-    prefix: "supabase",
+    url: process.env.DATABASE_URL!,
   },
 });
