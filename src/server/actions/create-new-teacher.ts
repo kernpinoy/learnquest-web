@@ -1,6 +1,6 @@
 "use server";
 import { createSafeActionClient } from "next-safe-action";
-import { addTeacherFormSchema } from "~/lib/forms/add-new-teacher-form";
+import { addTeacherFormSchema } from "~/lib/validation/add-teacher";
 import { getUser } from "../functions/users";
 import { getSalt, hashPassword } from "~/lib/hash";
 import { db } from "~/server/db";

@@ -8,11 +8,8 @@ import { toast } from "sonner";
 import FormField from "~/components/custom/form-field";
 import { ButtonLoading } from "~/components/custom/loading-button";
 import { Form } from "~/components/ui/form";
-import {
-  defaultValues,
-  LoginFormSchemaType,
-  resolver,
-} from "~/lib/forms/login-form";
+import { defaultValues, resolver } from "~/lib/validation/login";
+import type { LoginForm } from "~/lib/validation/login";
 import { cn } from "~/lib/utils";
 
 interface LoginFormUIProps extends HTMLAttributes<HTMLDivElement> {}
@@ -21,12 +18,12 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
   const router = useRouter();
 
   // Form creation
-  const form = useForm<LoginFormSchemaType>({
+  const form = useForm<LoginForm>({
     resolver,
     defaultValues: defaultValues,
   });
 
-  async function onSubmit(values: LoginFormSchemaType) {
+  async function onSubmit(values: LoginForm) {
     const formData = new FormData();
     formData.append("username", values.username);
     formData.append("password", values.password);

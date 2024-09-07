@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import getMenuList from "~/lib/lists";
+import getMenuList from "~/lib/list";
 import { cn } from "~/lib/utils";
 import {
   Tooltip,
@@ -14,7 +14,7 @@ import { Ellipsis } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { CollapseMenuButton } from "./collapse-menu-button";
-import { useSidebar } from "~/providers/useSidebar";
+import { useSidebar } from "~/hooks/use-sidebar";
 
 interface MenuProps {
   isAdmin?: boolean;

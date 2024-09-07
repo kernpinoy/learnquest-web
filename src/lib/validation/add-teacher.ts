@@ -29,13 +29,13 @@ export const addTeacherFormSchema = z
   });
 
 // Infer type of registration form
-export type AddTeacherFormType = z.infer<typeof addTeacherFormSchema>;
+export type AddTeacher = z.infer<typeof addTeacherFormSchema>;
 
 // Export resolver
 export const resolver = zodResolver(addTeacherFormSchema);
 
 // Export default values
-export const defaultValues: AddTeacherFormType = {
+export const defaultValues: AddTeacher = {
   firstName: "",
   middleName: "",
   lastName: "",

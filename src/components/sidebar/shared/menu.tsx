@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import getMenuList from "~/lib/lists";
+import getMenuList from "~/lib/list";
 import { cn } from "~/lib/utils";
 import { useSidebar } from "~/hooks/use-sidebar";
 import {

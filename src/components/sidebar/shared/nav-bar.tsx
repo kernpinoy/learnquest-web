@@ -1,3 +1,4 @@
+import { ModeToggle } from "~/components/theme-button";
 import SheetMenuLayout from "./sheet-menu-layout";
 
 interface NavBarProps extends React.HTMLAttributes<HTMLElement> {
@@ -13,6 +14,7 @@ export default function NavBar({ title }: NavBarProps) {
         </div>
         <div className="flex flex-1 items-center space-x-2 justify-end">
           {/* Theme toggle */}
+          <ModeToggle />
           {/* Avatar */}
         </div>
       </div>

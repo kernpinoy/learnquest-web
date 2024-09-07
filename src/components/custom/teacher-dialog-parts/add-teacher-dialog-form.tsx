@@ -2,7 +2,7 @@
 
 import { Form } from "~/components/ui/form";
 import FormField from "~/components/custom/form-field";
-import type { AddTeacherFormType } from "~/lib/forms/add-new-teacher-form";
+import type { AddTeacher } from "~/lib/validation/add-teacher";
 import { ButtonLoading } from "../loading-button";
 import { Button } from "~/components/ui/button";
 import { DialogClose, DialogFooter } from "~/components/ui/dialog";
@@ -38,7 +38,7 @@ export default function AddTeacherDialogForm() {
     },
   });
 
-  function onSubmit(values: AddTeacherFormType) {
+  function onSubmit(values: AddTeacher) {
     execute(values);
   }
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import type { AddTeacherFormType } from "~/lib/forms/add-new-teacher-form";
-import { resolver, defaultValues } from "~/lib/forms/add-new-teacher-form";
+import type { AddTeacher } from "~/lib/validation/add-teacher";
+import { resolver, defaultValues } from "~/lib/validation/add-teacher";
 
 export function useAddTeacherForm() {
-  return useForm<AddTeacherFormType>({
+  return useForm<AddTeacher>({
     resolver,
     defaultValues,
   });

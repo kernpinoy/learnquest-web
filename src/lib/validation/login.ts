@@ -11,13 +11,13 @@ export const loginFormSchema = z.object({
 });
 
 // Infer type of login form
-export type LoginFormSchemaType = z.infer<typeof loginFormSchema>;
+export type LoginForm = z.infer<typeof loginFormSchema>;
 
 // Export resolver
 export const resolver = zodResolver(loginFormSchema);
 
 // Export default values
-export const defaultValues: LoginFormSchemaType = {
+export const defaultValues: LoginForm = {
   username: "",
   password: "",
 };

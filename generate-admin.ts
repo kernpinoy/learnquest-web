@@ -1,8 +1,8 @@
 import { generateIdFromEntropySize } from "lucia"; // gagamitin para sa id ng admin
 import { randomBytes } from "crypto";
 import { hash } from "@node-rs/argon2";
-import { db } from "./db";
-import { usersTable } from "./db/schema";
+import { db } from "./src/server/db";
+import { users } from "./src/server/db/schema";
 import { eq } from "drizzle-orm";
 
 const username = process.env.USER_NAME;
@@ -11,8 +11,8 @@ if (!username) {
   process.exit(-1);
 }
 
-const existingUser = await db.query.usersTable.findFirst({
-  where: eq(usersTable.userName, username),
+const existingUser = await db.query.users.findFirst({
+  where: eq(users.username, username),
 });
 
 if (existingUser) {
@@ -46,13 +46,11 @@ console.log("Salt:", salt.toString());
 console.log("Hashed:", hashed);
 console.log("-------------------------------");
 
-// Insert to user and detail
-await db.insert(usersTable).values({
+await db.insert(users).values({
   id: userId,
-  userName: username,
-  hashedPassword: hashed,
-  salt: salt.toString(),
-  role: "admin",
+  username: username,
+  password: hashed,
+  salt: salt,
 });
 
 console.log("Check mo na sa https://supabase.com/dashboard/projects");
