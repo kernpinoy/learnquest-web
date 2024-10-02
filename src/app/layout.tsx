@@ -4,11 +4,16 @@ import { cn } from "~/lib/utils";
 import { ThemeProvider } from "~/providers/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
 import ReactQueryProvider from "~/providers/react-query-client";
+import type { Metadata } from "next";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+
+export const metadata: Metadata = {
+  title: "LearnQuest | Login",
+};
 
 export default function RootLayout({
   children,

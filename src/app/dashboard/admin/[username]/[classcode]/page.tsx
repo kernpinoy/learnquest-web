@@ -1,6 +1,16 @@
 import ContentLayout from "~/components/sidebar/shared/content-layout";
+import { getAllClassCode } from "~/server/functions/teachers";
+import DataTable from "~/app/dashboard/admin/[username]/[classcode]/data-table";
 
-export default function TeacherClassPage({
+export async function generateStaticParams() {
+  const classCodes = getAllClassCode();
+
+  return (await classCodes).map((classCode) => ({
+    classcode: classCode.classCode,
+  }));
+}
+
+export default function ClassroomPage({
   params,
 }: {
   params: { classcode: string };
@@ -8,11 +18,8 @@ export default function TeacherClassPage({
   const { classcode } = params;
 
   return (
-    <ContentLayout title="asdasd">
-      <div>
-        Hello from classes!
-        <div>Classcode: {classcode}</div>
-      </div>
+    <ContentLayout title="Class Profile">
+      <DataTable />
     </ContentLayout>
   );
 }

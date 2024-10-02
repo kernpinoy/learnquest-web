@@ -27,8 +27,6 @@ export default function AddTeacherDialogForm() {
       if (data?.success) {
         toast.dismiss();
         toast.success(data?.success, { duration: 1000, closeButton: false });
-        // TODO: Decide to either close this shit, or just reset the form
-        closeRef.current.click();
         form.reset();
       }
     },
