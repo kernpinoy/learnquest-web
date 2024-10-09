@@ -1,6 +1,7 @@
 "use server";
 
 import { asc, eq } from "drizzle-orm";
+import { getSalt, hashPassword } from "~/lib/hash";
 import { db } from "~/server/db";
 import {
   classrooms,
@@ -83,6 +84,52 @@ export async function getTeacherClassroom(username: string) {
     .innerJoin(teachersInfo, eq(classrooms.teacherId, teachersInfo.id))
     .innerJoin(users, eq(users.id, teachersInfo.userId))
     .where(eq(users.username, username));
+
+  return result;
+}
+
+export async function deleteTeacher(teacherId: string) {
+  const result = await db
+    .delete(teachersInfo)
+    .where(eq(teachersInfo.id, teacherId))
+    .returning();
+
+  return result;
+}
+
+export async function archiveTeacher(teacherId: string) {
+  const result = await db
+    .update(teachersInfo)
+    .set({ archived: true })
+    .where(eq(teachersInfo.id, teacherId))
+    .returning();
+
+  return result;
+}
+
+export async function changeUsername(teacherId: string, newUsername: string) {
+  const [userId] = await db
+    .select({ userId: teachersInfo.userId })
+    .from(teachersInfo)
+    .where(eq(teachersInfo.id, teacherId));
+
+  const result = await db
+    .update(users)
+    .set({ username: newUsername })
+    .where(eq(users.id, userId.userId));
+
+  return result;
+}
+
+export async function changePassword(userId: string, newPassword: string) {
+  const salt = getSalt();
+  const saltText = salt.toString("base64");
+  const hashedPw = await hashPassword(newPassword, salt);
+
+  const result = await db
+    .update(users)
+    .set({ hashedPassword: hashedPw, salt: saltText })
+    .where(eq(users.id, userId));
 
   return result;
 }

@@ -1,6 +1,7 @@
 import ContentLayout from "~/components/sidebar/shared/content-layout";
 import { getAllClassCode } from "~/server/functions/teachers";
 import DataTable from "~/app/dashboard/admin/[username]/[classcode]/data-table";
+import GoBack from "~/components/ui/go-back";
 
 export async function generateStaticParams() {
   const classCodes = getAllClassCode();
@@ -19,6 +20,7 @@ export default function ClassroomPage({
 
   return (
     <ContentLayout title="Class Profile">
+      <GoBack />
       <DataTable />
     </ContentLayout>
   );

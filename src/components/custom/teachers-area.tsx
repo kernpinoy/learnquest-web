@@ -55,7 +55,7 @@ function TeachersGrid({ teachers }: TeachersGridProps) {
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Teacher</CardTitle>
-              <TeacherActionsDropdown />
+              <TeacherActionsDropdown teacherId={id}/>
             </CardHeader>
             <CardContent className="flex-grow flex flex-col justify-center">
               <div className="flex items-center space-x-4">

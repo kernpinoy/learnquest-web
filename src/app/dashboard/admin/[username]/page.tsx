@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import ClassroomArea from "~/components/custom/classroom-area";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
+import GoBack from "~/components/ui/go-back";
 import {
   getAllTeacherUsername,
   getTeacherClassroom,
@@ -35,6 +36,7 @@ export default async function TeacherClassesPage({
 
   return (
     <ContentLayout title={`${teacherFullName}'s Class`}>
+      <GoBack />
       <HydrationBoundary state={dehydrate(query)}>
         <ClassroomArea username={username} />
       </HydrationBoundary>

@@ -58,7 +58,15 @@ export function ResponsiveAlertDialog({
             <AlertDialogCancel onClick={() => setIsOpen(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction variant={confirmVariant}>
+            <AlertDialogAction
+              variant={confirmVariant}
+              onClick={(e) => {
+                e.preventDefault();
+                if (onConfirm) {
+                  onConfirm();
+                }
+              }}
+            >
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>

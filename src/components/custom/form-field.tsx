@@ -46,7 +46,7 @@ export default function FormField(props: FormFieldProps) {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="space-y-1">
+        <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <RenderInput

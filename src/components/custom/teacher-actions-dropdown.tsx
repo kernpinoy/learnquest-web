@@ -21,17 +21,17 @@ import {
 import { ResponsiveAlertDialog } from "../ui/responsive-alert";
 import { Input } from "../ui/input";
 import ResetPasswordForm from "../reset-password/reset-form";
+import ChangeTeacherPassword from "./change-teacher-password";
 
-export default function TeacherActionsDropdown() {
+export default function TeacherActionsDropdown({
+  teacherId,
+}: {
+  teacherId: string;
+}) {
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
   const [isChangeUsernameOpen, setIsChangeUsernameOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  const resetFormRef = useRef<HTMLFormElement>(null!);
-  function handleResetPassword() {
-    resetFormRef.current.submit();
-  }
 
   return (
     <>
@@ -42,12 +42,10 @@ export default function TeacherActionsDropdown() {
         description="This will archive the teacher account and remove it from the list."
         confirmVariant="destructive"
       />
-      <ResetPasswordForm
+      <ChangeTeacherPassword
         isOpen={isResetPasswordOpen}
         setIsOpen={setIsResetPasswordOpen}
-        title="Reset Password"
-        description="Are you sure you want to reset the password of this account?"
-        confirmVariant="destructive"
+        teacherId={teacherId}
       />
       <ResponsiveAlertDialog
         isOpen={isChangeUsernameOpen}
@@ -64,7 +62,7 @@ export default function TeacherActionsDropdown() {
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
         title="Delete account"
-        description="Do you want to delete the account"
+        description="This will delete the teacher account and remove it from the list permanently."
         confirmVariant="destructive"
       />
       <DropdownMenu>
