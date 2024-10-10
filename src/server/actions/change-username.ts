@@ -1,25 +1,25 @@
 "use server";
 
 import { createSafeActionClient } from "next-safe-action";
-import { resetAccountFormSchema } from "~/lib/validation/reset-account";
-import { changePassword } from "../functions/teachers";
+import { changeUsernameFormSchema } from "~/lib/validation/change-teacher-username";
+import { changeUsername } from "../functions/teachers";
 import { db } from "../db";
 
 const action = createSafeActionClient();
 
-export const resetPassword = action
-  .schema(resetAccountFormSchema)
-  .action(async ({ parsedInput: { userId, password, confirmPassword } }) => {
-    if (confirmPassword !== password) {
-      return { error: "Passwords does not match." };
+export const changeUsernameAction = action
+  .schema(changeUsernameFormSchema)
+  .action(async ({ parsedInput: { userId, username, confirmUsername } }) => {
+    if (username !== confirmUsername) {
+      return { error: "Usernames does not match." };
     }
 
     // Create new user and teacher account
     const result = await db.transaction(async (tx) => {
       try {
-        await changePassword(userId, password);
-        
-        return { success: `Password changed successfully.` };
+        await changeUsername(userId, username);
+
+        return { success: `Username changed successfully.` };
       } catch (error) {
         tx.rollback();
         return { error: "Something went wrong. Please try again later." };

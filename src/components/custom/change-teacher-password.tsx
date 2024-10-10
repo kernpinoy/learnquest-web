@@ -19,20 +19,35 @@ import FormField from "./form-field";
 import { useAction } from "next-safe-action/hooks";
 import { resetPassword } from "~/server/actions/change-password";
 import { toast } from "sonner";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "../ui/drawer";
 
 interface ChangeTeacherPasswordProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  teacherId: string;
+  userId: string;
 }
 
 export default function ChangeTeacherPassword({
   isOpen,
   setIsOpen,
-  teacherId,
+  userId,
 }: ChangeTeacherPasswordProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const form = useResetTeacherPassword(teacherId);
+  const form = useResetTeacherPassword(userId);
+
+  useEffect(() => {
+    if (!isOpen) {
+      form.reset();
+    }
+  }, [isOpen, form]);
 
   const { execute, status } = useAction(resetPassword, {
     onSuccess({ data }) {
@@ -55,6 +70,11 @@ export default function ChangeTeacherPassword({
 
   function onSubmit(values: ResetAccount) {
     execute(values);
+  }
+
+  function closePopup() {
+    form.reset();
+    setIsOpen(false);
   }
 
   if (isDesktop) {
@@ -97,11 +117,19 @@ export default function ChangeTeacherPassword({
               </div>
               <DialogFooter>
                 <DialogClose asChild>
-                  <Button onClick={() => setIsOpen(false)} variant="secondary" disabled={status === "executing"}>
+                  <Button
+                    onClick={() => closePopup()}
+                    variant="secondary"
+                    disabled={status === "executing"}
+                  >
                     Close
                   </Button>
                 </DialogClose>
-                <Button type="submit" variant="destructive" disabled={status === "executing"}>
+                <Button
+                  type="submit"
+                  variant="destructive"
+                  disabled={status === "executing"}
+                >
                   Confirm
                 </Button>
               </DialogFooter>
@@ -111,4 +139,65 @@ export default function ChangeTeacherPassword({
       </Dialog>
     );
   }
+
+  return (
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Reset Password</DrawerTitle>
+          <DrawerDescription>
+            Are you sure you want to reset the password of this account?
+          </DrawerDescription>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="grid items-start gap-4"
+            >
+              <div className="grid gap-2">
+                <FormField
+                  control={form.control}
+                  fieldType="hidden"
+                  name="userId"
+                />
+
+                <FormField
+                  control={form.control}
+                  fieldType="password"
+                  name="password"
+                  label="Enter new password"
+                  placeholder="******"
+                />
+
+                <FormField
+                  control={form.control}
+                  fieldType="password"
+                  name="confirmPassword"
+                  label="Confirm new password"
+                  placeholder="******"
+                />
+              </div>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button
+                    onClick={() => closePopup()}
+                    variant="secondary"
+                    disabled={status === "executing"}
+                  >
+                    Close
+                  </Button>
+                </DrawerClose>
+                <Button
+                  type="submit"
+                  variant="destructive"
+                  disabled={status === "executing"}
+                >
+                  Confirm
+                </Button>
+              </DrawerFooter>
+            </form>
+          </Form>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
+  );
 }

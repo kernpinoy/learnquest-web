@@ -107,16 +107,11 @@ export async function archiveTeacher(teacherId: string) {
   return result;
 }
 
-export async function changeUsername(teacherId: string, newUsername: string) {
-  const [userId] = await db
-    .select({ userId: teachersInfo.userId })
-    .from(teachersInfo)
-    .where(eq(teachersInfo.id, teacherId));
-
+export async function changeUsername(userId: string, newUsername: string) {
   const result = await db
     .update(users)
     .set({ username: newUsername })
-    .where(eq(users.id, userId.userId));
+    .where(eq(users.id, userId));
 
   return result;
 }

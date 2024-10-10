@@ -7,7 +7,7 @@ import {
   Trash2,
   UserRoundPen,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -19,12 +19,11 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { ResponsiveAlertDialog } from "../ui/responsive-alert";
-import { Input } from "../ui/input";
-import ResetPasswordForm from "../reset-password/reset-form";
 import ChangeTeacherPassword from "./change-teacher-password";
+import ChangeTeacherUsername from "./change-teacher-username";
 
 export default function TeacherActionsDropdown({
-  teacherId,
+  teacherId: userId,
 }: {
   teacherId: string;
 }) {
@@ -45,19 +44,13 @@ export default function TeacherActionsDropdown({
       <ChangeTeacherPassword
         isOpen={isResetPasswordOpen}
         setIsOpen={setIsResetPasswordOpen}
-        teacherId={teacherId}
+        userId={userId}
       />
-      <ResponsiveAlertDialog
+      <ChangeTeacherUsername
         isOpen={isChangeUsernameOpen}
         setIsOpen={setIsChangeUsernameOpen}
-        title="Change username"
-        description="Enter new username"
-        confirmVariant="destructive"
-      >
-        <div className="grid gap-4">
-          <Input type="text" placeholder="Enter username" />
-        </div>
-      </ResponsiveAlertDialog>
+        userId={userId}
+      />
       <ResponsiveAlertDialog
         isOpen={isDeleteOpen}
         setIsOpen={setIsDeleteOpen}
