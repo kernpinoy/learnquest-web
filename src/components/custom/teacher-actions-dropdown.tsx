@@ -21,10 +21,14 @@ import {
 import { ResponsiveAlertDialog } from "../ui/responsive-alert";
 import ChangeTeacherPassword from "./change-teacher-password";
 import ChangeTeacherUsername from "./change-teacher-username";
+import ArchiveTeacherAccount from "./archive-teacher-account";
+import DeleteTeacherAccount from "./delete-teacher-acount";
 
 export default function TeacherActionsDropdown({
-  teacherId: userId,
+  userId,
+  teacherId,
 }: {
+  userId: string;
   teacherId: string;
 }) {
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
@@ -34,12 +38,10 @@ export default function TeacherActionsDropdown({
 
   return (
     <>
-      <ResponsiveAlertDialog
-        isOpen={isArchiveOpen}
-        setIsOpen={setIsArchiveOpen}
-        title="Are you absolutely sure?"
-        description="This will archive the teacher account and remove it from the list."
-        confirmVariant="destructive"
+      <ArchiveTeacherAccount
+        open={isArchiveOpen}
+        onOpenChange={setIsArchiveOpen}
+        teacherId={teacherId}
       />
       <ChangeTeacherPassword
         isOpen={isResetPasswordOpen}
@@ -51,12 +53,10 @@ export default function TeacherActionsDropdown({
         setIsOpen={setIsChangeUsernameOpen}
         userId={userId}
       />
-      <ResponsiveAlertDialog
-        isOpen={isDeleteOpen}
-        setIsOpen={setIsDeleteOpen}
-        title="Delete account"
-        description="This will delete the teacher account and remove it from the list permanently."
-        confirmVariant="destructive"
+      <DeleteTeacherAccount
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        userId={userId}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

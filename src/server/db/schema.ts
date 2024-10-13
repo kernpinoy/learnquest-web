@@ -53,6 +53,7 @@ export const classrooms = pgTable("classrooms", {
   })
     .notNull()
     .defaultNow(),
+  archived: boolean("archived").notNull().default(false),
 });
 
 export const studentsInfo = pgTable("students_info", {
@@ -75,6 +76,7 @@ export const studentsInfo = pgTable("students_info", {
   })
     .notNull()
     .defaultNow(),
+  archived: boolean("archived").notNull().default(false),
 });
 
 export const sessions = pgTable("sessions", {

@@ -18,7 +18,7 @@ export const resetPassword = action
     const result = await db.transaction(async (tx) => {
       try {
         await changePassword(userId, password);
-        
+
         return { success: `Password changed successfully.` };
       } catch (error) {
         tx.rollback();

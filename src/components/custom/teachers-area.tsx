@@ -17,6 +17,7 @@ interface TeacherDetails {
   createdAt: Date;
   username: string;
   id: string;
+  teacherId: string;
 }
 
 interface TeachersGridProps {
@@ -48,14 +49,14 @@ function TeachersGrid({ teachers }: TeachersGridProps) {
         <AddTeacherDialog />
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {teachers.map(({ fullName, createdAt, username, id }) => (
+        {teachers.map(({ fullName, createdAt, username, id, teacherId }) => (
           <Card
             className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer h-full flex flex-col"
             key={id}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Teacher</CardTitle>
-              <TeacherActionsDropdown teacherId={id}/>
+              <TeacherActionsDropdown userId={id} teacherId={teacherId} />
             </CardHeader>
             <CardContent className="flex-grow flex flex-col justify-center">
               <div className="flex items-center space-x-4">

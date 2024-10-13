@@ -19,6 +19,15 @@ import { Button } from "../ui/button";
 import { useAction } from "next-safe-action/hooks";
 import { changeUsernameAction } from "~/server/actions/change-username";
 import { toast } from "sonner";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "../ui/drawer";
 
 interface ChangeTeacherUsernameProps {
   isOpen: boolean;
@@ -130,4 +139,65 @@ export default function ChangeTeacherUsername({
       </Dialog>
     );
   }
+
+  return (
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Change username</DrawerTitle>
+          <DrawerDescription>
+            This is the form to change username
+          </DrawerDescription>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="grid items-start gap-4"
+            >
+              <div className="grid gap-2">
+                <FormField
+                  control={form.control}
+                  fieldType="hidden"
+                  name="userId"
+                />
+
+                <FormField
+                  control={form.control}
+                  fieldType="text"
+                  name="username"
+                  label="Enter new username"
+                  placeholder="Username"
+                />
+
+                <FormField
+                  control={form.control}
+                  fieldType="text"
+                  name="confirmUsername"
+                  label="Confirm new username"
+                  placeholder="Username"
+                />
+              </div>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button
+                    onClick={() => closePopup()}
+                    variant="secondary"
+                    disabled={status === "executing"}
+                  >
+                    Close
+                  </Button>
+                </DrawerClose>
+                <Button
+                  type="submit"
+                  variant="destructive"
+                  disabled={status === "executing"}
+                >
+                  Confirm
+                </Button>
+              </DrawerFooter>
+            </form>
+          </Form>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
+  );
 }

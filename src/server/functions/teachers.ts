@@ -50,10 +50,12 @@ export async function getTeacherDetails() {
       createdAt: teachersInfo.createdAt,
       username: users.username,
       id: users.id,
+      teacherId: teachersInfo.id,
     })
     .from(teachersInfo)
     .innerJoin(users, eq(users.id, teachersInfo.userId))
-    .orderBy(asc(teachersInfo.createdAt));
+    .orderBy(asc(teachersInfo.createdAt))
+    .where(eq(teachersInfo.archived, false));
 
   return result;
 }
@@ -88,11 +90,10 @@ export async function getTeacherClassroom(username: string) {
   return result;
 }
 
-export async function deleteTeacher(teacherId: string) {
+export async function deleteTeacher(userId: string) {
   const result = await db
-    .delete(teachersInfo)
-    .where(eq(teachersInfo.id, teacherId))
-    .returning();
+    .delete(users)
+    .where(eq(users.id, userId));
 
   return result;
 }

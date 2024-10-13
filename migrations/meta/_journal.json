@@ -50,6 +50,20 @@
       "when": 1727244684733,
       "tag": "0006_overconfident_terrax",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1728603682810,
+      "tag": "0007_nebulous_microchip",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1728604106311,
+      "tag": "0008_tidy_green_goblin",
+      "breakpoints": true
     }
   ]
 }
