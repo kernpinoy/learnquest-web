@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import AdminSidebarLayout from "~/components/sidebar/admin/admin-sidebar-layout";
+import TeacherSidebarLayout from "~/components/sidebar/teacher/teacher-sidebar-layout";
 import { SidebarProvider } from "~/providers/sidebar-provider";
 
 export default function TeacherDashboardLayout({
@@ -7,7 +7,7 @@ export default function TeacherDashboardLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <SidebarProvider>
-      <AdminSidebarLayout>{children}</AdminSidebarLayout>
+      <TeacherSidebarLayout>{children}</TeacherSidebarLayout>
     </SidebarProvider>
   );
 }

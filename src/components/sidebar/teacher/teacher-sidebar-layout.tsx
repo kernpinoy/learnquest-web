@@ -5,7 +5,7 @@ import Sidebar from "../shared/sidebar";
 import { useSidebar } from "~/hooks/use-sidebar";
 import { cn } from "~/lib/utils";
 
-export default function AdminSidebarLayout({
+export default function TeacherSidebarLayout({
   children,
 }: {
   children: ReactNode;
@@ -14,7 +14,7 @@ export default function AdminSidebarLayout({
 
   return (
     <>
-      <Sidebar isAdmin/>
+      <Sidebar isAdmin={false}/>
 
       <main
         className={cn(

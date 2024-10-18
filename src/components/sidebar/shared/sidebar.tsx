@@ -8,7 +8,7 @@ import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
 import AdminMenu from "./menu";
 
-export default function Sidebar() {
+export default function Sidebar({ isAdmin = true}: { isAdmin: boolean }) {
   const { isOpen } = useSidebar();
 
   return (
@@ -44,7 +44,7 @@ export default function Sidebar() {
           </Link>
         </Button>
 
-        <AdminMenu isAdmin />
+        <AdminMenu isAdmin={isAdmin} />
       </div>
     </aside>
   );

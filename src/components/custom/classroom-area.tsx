@@ -2,7 +2,7 @@
 
 import { useGetTeacherClassroom } from "~/data/use-get-teacher-classroom";
 import { toast } from "sonner";
-import { useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -22,8 +22,10 @@ import {
 import { Button } from "../ui/button";
 import { Copy } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
+import { Input } from "../ui/input";
+import ParagraphIsh from "../paragraph-ish";
 
 interface Classroom {
   id: string;
@@ -38,6 +40,7 @@ interface ClassroomCardProps {
   classrooms: Classroom[];
   copyToClipboard: (text: string) => void;
   isCopied: boolean;
+  searchTerm: string;
 }
 
 function ClassroomSkeleton() {
@@ -54,13 +57,21 @@ function ClassroomSkeleton() {
 
 function NoClassrooms() {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
-          There are no classrooms created by the user.
-        </p>
-      </div>
-    </div>
+    <ParagraphIsh>
+      <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
+        There are no classrooms created by the user.
+      </p>
+    </ParagraphIsh>
+  );
+}
+
+function NoSearchResults() {
+  return (
+    <ParagraphIsh>
+      <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
+        No classrooms found matching your search criteria.
+      </p>
+    </ParagraphIsh>
   );
 }
 
@@ -68,6 +79,7 @@ function ClassroomCard({
   classrooms,
   copyToClipboard,
   isCopied,
+  searchTerm,
 }: ClassroomCardProps) {
   const pathName = usePathname();
 
@@ -76,63 +88,84 @@ function ClassroomCard({
     copyToClipboard(text);
   }
 
+  const filteredClassroom = useMemo(() => {
+    return classrooms.filter(
+      (classroom) =>
+        classroom.classCode?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        classroom.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        classroom.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        classroom.teacherId?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [classrooms, searchTerm]);
+
+  if (filteredClassroom.length === 0) {
+    return <NoSearchResults />;
+  }
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {classrooms.map(({ id, name, classCode, classSession, createdAt }) => (
-        <Card
-          key={id}
-          className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer"
-        >
-          <CardHeader>
-            <div className="flex justify-between items-start">
-              <div>
-                <CardTitle className="text-lg font-medium hover:underline">
-                  <Link
-                    className="font-medium"
-                    href={`${pathName}/${classCode}`}
-                  >
-                    {name}
-                  </Link>
-                </CardTitle>
-                <CardDescription>Testing lang muna</CardDescription>
-              </div>
-              <Badge variant="secondary" className="sm capitalize">
-                {classSession}
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-sm font-medium ">Class code: {classCode}</p>
-              <TooltipProvider disableHoverableContent>
-                <Tooltip delayDuration={100}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={(e) => copy(e, classCode)}
+      {filteredClassroom.map(
+        ({ id, name, classCode, classSession, createdAt }) => (
+          <Card
+            key={id}
+            className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer"
+          >
+            <CardHeader>
+              <div className="flex justify-between items-start">
+                <div>
+                  <CardTitle className="text-lg font-medium hover:underline">
+                    <Link
+                      className="font-medium"
+                      href={`${pathName}/${classCode}`}
                     >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isCopied ? "Copied!" : "Copy class code"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Created: {new Date(createdAt).toLocaleDateString()}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
+                      {name}
+                    </Link>
+                  </CardTitle>
+                  <CardDescription>Testing lang muna</CardDescription>
+                </div>
+                <Badge variant="secondary" className="sm capitalize">
+                  {classSession}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-sm font-medium ">Class code: {classCode}</p>
+                <TooltipProvider disableHoverableContent>
+                  <Tooltip delayDuration={100}>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={(e) => copy(e, classCode)}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{isCopied ? "Copied!" : "Copy class code"}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Created: {new Date(createdAt).toLocaleDateString()}
+              </p>
+            </CardContent>
+          </Card>
+        )
+      )}
     </div>
   );
 }
 
 export default function ClassroomArea({ username }: { username: string }) {
   const { data: classrooms, isLoading } = useGetTeacherClassroom(username);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("search") || "";
+  const pathName = usePathname();
+
   const [isCopied, setIsCopied] = useState(false);
 
   function copyToClipboard(text: string) {
@@ -151,6 +184,22 @@ export default function ClassroomArea({ username }: { username: string }) {
       });
     });
   }
+
+  const handleSearchChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newSearchTerm = e.target.value;
+      const params = new URLSearchParams(searchParams);
+
+      if (newSearchTerm) {
+        params.set("search", newSearchTerm);
+      } else {
+        params.delete("search");
+      }
+
+      router.replace(`${pathName}?${params.toString()}`);
+    },
+    [searchParams, router]
+  );
 
   return (
     <>
@@ -185,10 +234,19 @@ export default function ClassroomArea({ username }: { username: string }) {
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.3 }}
           >
+            <div className="flex justify-between mb-4">
+              <Input
+                className="w-72 lg:w-96"
+                placeholder="Search..."
+                defaultValue={searchTerm}
+                onChange={handleSearchChange}
+              />
+            </div>
             <ClassroomCard
               classrooms={classrooms || []}
               copyToClipboard={copyToClipboard}
               isCopied={isCopied}
+              searchTerm={searchTerm}
             />
           </motion.div>
         )}

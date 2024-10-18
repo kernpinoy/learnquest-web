@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -11,6 +11,8 @@ import { Form } from "~/components/ui/form";
 import { defaultValues, resolver } from "~/lib/validation/login";
 import type { LoginForm } from "~/lib/validation/login";
 import { cn } from "~/lib/utils";
+import { useAction } from "next-safe-action/hooks";
+import { loginAccountAction } from "~/server/actions/login-account";
 
 interface LoginFormUIProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -23,10 +25,27 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
     defaultValues: defaultValues,
   });
 
-  async function onSubmit(values: LoginForm) {
-    const formData = new FormData();
-    formData.append("username", values.username);
-    formData.append("password", values.password);
+  const { execute, status } = useAction(loginAccountAction, {
+    onSuccess({ data }) {
+      if (data?.error) {
+        toast.dismiss();
+        toast.warning(data?.error, { duration: 2000, closeButton: false });
+      }
+
+      if (data?.success) {
+        toast.dismiss();
+        toast.success(data?.success, { duration: 1000, closeButton: false });
+        redirect(`/dashboard/${data?.redirectTo}`);
+      }
+    },
+    onError({ error }) {
+      toast.dismiss();
+      toast.error(error.serverError, { duration: 2000, closeButton: false });
+    },
+  });
+
+  function onSubmit(values: LoginForm) {
+    execute(values);
   }
 
   return (

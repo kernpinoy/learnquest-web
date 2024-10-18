@@ -38,7 +38,7 @@ export const teachersInfo = pgTable("teachers_info", {
 export const classrooms = pgTable("classrooms", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .$defaultFn(() => crypto.randomUUID()), 
   teacherId: text("teacher_id")
     .notNull()
     .references(() => teachersInfo.id, { onDelete: "cascade" }),
