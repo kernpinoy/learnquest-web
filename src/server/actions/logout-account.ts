@@ -22,7 +22,7 @@ export default async function logoutAccountAction() {
   const sessionCookie = lucia.createBlankSessionCookie();
 
   // Share the cookie to browser
-  cookies().set(
+  (await cookies()).set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes

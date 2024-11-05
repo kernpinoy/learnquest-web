@@ -26,6 +26,7 @@ export default async function TeacherClassesPage({
   params: { username: string };
 }) {
   const { username } = params;
+
   const teacherFullName = await getTeacherFullName(username);
   const query = new QueryClient();
 

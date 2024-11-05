@@ -82,7 +82,7 @@ export default function ClassManagement() {
 
   return (
     <Tabs defaultValue="profile" className="w-full">
-      <TabsList className="mb-4">
+      <TabsList className="mb-6">
         <TabsTrigger value="profile">Profile</TabsTrigger>
         <TabsTrigger value="materials">Learning Materials</TabsTrigger>
       </TabsList>

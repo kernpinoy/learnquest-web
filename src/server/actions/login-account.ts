@@ -57,7 +57,7 @@ export const loginAccountAction = loginAction
       const sessionCookie = lucia.createSessionCookie(session.id);
 
       // Set the session cookie
-      cookies().set(
+      (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes

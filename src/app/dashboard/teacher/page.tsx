@@ -11,7 +11,7 @@ import { getTeacherClassroom } from "~/server/functions/teachers";
 
 export default async function AdminDashboardPage() {
   const { session, user } = await validateRequest();
-
+  
   if (!session && !user) {
     redirect("/");
   }

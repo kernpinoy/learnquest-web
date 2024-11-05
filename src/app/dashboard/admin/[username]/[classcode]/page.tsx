@@ -11,11 +11,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ClassroomPage({
-  params,
-}: {
-  params: { classcode: string };
-}) {
+export default async function ClassroomPage(
+  props: {
+    params: Promise<{ classcode: string }>;
+  }
+) {
+  const params = await props.params;
   const { classcode } = params;
 
   return (

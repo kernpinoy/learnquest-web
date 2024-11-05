@@ -171,6 +171,7 @@ export default function ClassroomArea({ username }: { username: string }) {
   function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
       setIsCopied(true);
+  
       toast("Copied to clipboard!", {
         description: "Class code copied to clipboard.",
         duration: 2000,
@@ -198,7 +199,7 @@ export default function ClassroomArea({ username }: { username: string }) {
 
       router.replace(`${pathName}?${params.toString()}`);
     },
-    [searchParams, router]
+    [searchParams, router, pathName]
   );
 
   return (
