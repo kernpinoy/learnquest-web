@@ -4,7 +4,7 @@ import GoBack from "~/components/ui/go-back";
 export default function ArchiveStudentsPage() {
   return (
     <ContentLayout title="Archives">
-      <GoBack />
+      <div></div>
     </ContentLayout>
   );
 }

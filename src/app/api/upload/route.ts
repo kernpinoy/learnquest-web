@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+
 let count = 0;
 
 export async function GET(request: Request) {
@@ -7,7 +8,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const data = await request.clone();
+    const data = request.clone();
 
     // check if data is empty
     if (!data || (typeof data === "object" && Object.keys(data).length === 0)) {

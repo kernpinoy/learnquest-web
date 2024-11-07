@@ -111,7 +111,7 @@ function TeachersGrid({ teachers, searchTerm }: TeachersGridProps) {
 }
 
 export default function TeachersArea() {
-  const { data: teachers, isLoading } = useGetTeacherDetails();
+  const { data: teachers, isLoading, isError } = useGetTeacherDetails();
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search") || "";

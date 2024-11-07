@@ -6,8 +6,16 @@ import {
 import TeachersArea from "~/components/custom/teachers-area";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
 import { getTeacherDetails } from "~/server/functions/teachers";
+import { validateRequest } from "~/lib/validate-request"
+import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
+  const { session, user } = await validateRequest();
+
+  if (!session || !user || user.role !== "admin") {
+    redirect("/login");
+  }
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
