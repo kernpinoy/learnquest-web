@@ -6,16 +6,49 @@ export const addTeacherFormSchema = z
   .object({
     firstName: z
       .string()
-      .min(1, "First name must not be empty.")
-      .transform((str) => str.trim()),
+      .min(1, "First name is required")
+      .transform((str) => {
+        return str
+          .trim()
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
+      }),
     middleName: z
       .string()
-      .min(1, "Middle name must not be empty.")
-      .transform((str) => str.trim()),
+      .min(1, "Middle name is required")
+      .transform((str) => {
+        return str
+          .trim()
+          .split(" ")
+          .map((word) => {
+            // Special handling for particles like "dela", "de", "van", etc.
+            const lowerWord = word.toLowerCase();
+            if (["dela", "de", "van", "von"].includes(lowerWord)) {
+              return lowerWord;
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          })
+          .join(" ");
+      }),
     lastName: z
       .string()
-      .min(1, "Last name must not be empty.")
-      .transform((str) => str.trim()),
+      .min(1, "Last name is required")
+      .transform((str) => {
+        return str
+          .trim()
+          .split(" ")
+          .map((word) => {
+            const lowerWord = word.toLowerCase();
+            if (["dela", "de", "van", "von"].includes(lowerWord)) {
+              return lowerWord;
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+          })
+          .join(" ");
+      }),
     username: z
       .string()
       .min(1, "Username must not be empty.")

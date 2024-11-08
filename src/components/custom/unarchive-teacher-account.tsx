@@ -11,12 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import useArchiveTeacher from "~/hooks/use-archive-teacher";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
-import { ArchiveTeacher } from "~/lib/validation/archive-teacher";
 import FormField from "./form-field";
-import { archiveTeacherAction } from "~/server/actions/archive-teacher";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import {
@@ -26,24 +23,26 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-  DrawerClose
+  DrawerClose,
 } from "../ui/drawer";
-import { revalidatePath } from "next/cache";
-import { usePathname, useRouter } from "next/navigation";
+import { unarchiveTeacherAction } from "~/server/actions/unarchive-teacher";
+import useUnarchiveTeacher from "~/hooks/use-unarchive-teacher";
+import { UnarchiveTeacher } from "~/lib/validation/unarchive-teacher";
+import { usePathname } from "next/navigation";
 
-interface ArchiveTeacherAccountProps {
+interface UnarchiveTeacherAccountProps {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   teacherId: string;
 }
 
-export default function ArchiveTeacherAccount({
+export default function UnarchiveTeacherAccount({
   open,
   onOpenChange,
   teacherId,
-}: ArchiveTeacherAccountProps) {
+}: UnarchiveTeacherAccountProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const form = useArchiveTeacher(teacherId);
+  const form = useUnarchiveTeacher(teacherId);
 
   useEffect(() => {
     if (!open) {
@@ -51,7 +50,7 @@ export default function ArchiveTeacherAccount({
     }
   }, [open, form]);
 
-  const { execute, status } = useAction(archiveTeacherAction, {
+  const { execute, status } = useAction(unarchiveTeacherAction, {
     onSuccess({ data }) {
       if (data?.error) {
         toast.dismiss();
@@ -70,7 +69,7 @@ export default function ArchiveTeacherAccount({
     },
   });
 
-  function onSubmit(values: ArchiveTeacher) {
+  function onSubmit(values: UnarchiveTeacher) {
     execute(values);
   }
 
@@ -84,9 +83,9 @@ export default function ArchiveTeacherAccount({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Unarchive Teacher Account</DialogTitle>
             <DialogDescription>
-              This will archive the teacher account and remove it from the list.
+              This will restore the teacher account and make it active again.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -99,6 +98,7 @@ export default function ArchiveTeacherAccount({
                 name="teacherId"
                 fieldType="hidden"
               />
+
               <DialogFooter>
                 <DialogClose asChild>
                   <Button
@@ -109,11 +109,7 @@ export default function ArchiveTeacherAccount({
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button
-                  variant="destructive"
-                  type="submit"
-                  disabled={status === "executing"}
-                >
+                <Button type="submit" disabled={status === "executing"}>
                   Confirm
                 </Button>
               </DialogFooter>
@@ -128,9 +124,9 @@ export default function ArchiveTeacherAccount({
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+          <DrawerTitle>Unarchive Teacher Account</DrawerTitle>
           <DrawerDescription>
-            This will archive the teacher account and remove it from the list.
+            This will restore the teacher account and make it active again.
           </DrawerDescription>
         </DrawerHeader>
         <Form {...form}>
@@ -143,6 +139,7 @@ export default function ArchiveTeacherAccount({
               name="teacherId"
               fieldType="hidden"
             />
+
             <DrawerFooter>
               <DrawerClose asChild>
                 <Button
@@ -153,11 +150,7 @@ export default function ArchiveTeacherAccount({
                   Cancel
                 </Button>
               </DrawerClose>
-              <Button
-                variant="destructive"
-                type="submit"
-                disabled={status === "executing"}
-              >
+              <Button type="submit" disabled={status === "executing"}>
                 Confirm
               </Button>
             </DrawerFooter>

@@ -1,4 +1,11 @@
-import { pgEnum, pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  integer,
+} from "drizzle-orm/pg-core";
 import generateClassCode from "~/lib/classcode-gen";
 
 // Use enums for roles, class sesssions, and sex
@@ -12,9 +19,13 @@ export const users = pgTable("users", {
     .$defaultFn(() => crypto.randomUUID()),
   username: text("username").notNull().unique(),
   hashedPassword: text("hashed_password").notNull(),
-  salt: text("salt").notNull().unique(),
+  salt: text("salt").notNull().unique(),  
   role: role("role").notNull().default("teacher"),
   archived: boolean("archived").notNull().default(false),
+  archivedAt: timestamp("archived_at", {
+    withTimezone: true,
+    mode: "date",
+  }),
 });
 
 export const teachersInfo = pgTable("teachers_info", {
@@ -34,6 +45,10 @@ export const teachersInfo = pgTable("teachers_info", {
     .notNull()
     .defaultNow(),
   archived: boolean("archived").notNull().default(false),
+  archivedAt: timestamp("archived_at", {
+    withTimezone: true,
+    mode: "date",
+  }),
 });
 
 export const classrooms = pgTable("classrooms", {
@@ -48,6 +63,8 @@ export const classrooms = pgTable("classrooms", {
     .$defaultFn(() => generateClassCode(7)),
   name: text("name").notNull(),
   classSession: classSession("class_session").notNull(),
+  schoolYear: text("school_year").notNull(),
+  maxStudents: integer("max_students").notNull(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
     mode: "date",
@@ -55,6 +72,10 @@ export const classrooms = pgTable("classrooms", {
     .notNull()
     .defaultNow(),
   archived: boolean("archived").notNull().default(false),
+  archivedAt: timestamp("archived_at", {
+    withTimezone: true,
+    mode: "date",
+  }),
 });
 
 export const studentsInfo = pgTable("students_info", {
@@ -78,6 +99,10 @@ export const studentsInfo = pgTable("students_info", {
     .notNull()
     .defaultNow(),
   archived: boolean("archived").notNull().default(false),
+  archivedAt: timestamp("archived_at", {
+    withTimezone: true,
+    mode: "date",
+  }),
 });
 
 export const sessions = pgTable("sessions", {

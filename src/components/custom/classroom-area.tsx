@@ -26,6 +26,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
 import { Input } from "../ui/input";
 import ParagraphIsh from "../paragraph-ish";
+import AddClassroomDialog from "./add-classroom-parts/add-classroom-dialog";
 
 interface Classroom {
   id: string;
@@ -34,6 +35,8 @@ interface Classroom {
   createdAt: Date;
   classSession: "morning" | "afternoon";
   classCode: string;
+  maxStudents: number;
+  schoolYear: string;
 }
 
 interface ClassroomCardProps {
@@ -61,6 +64,9 @@ function NoClassrooms() {
       <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
         There are no classrooms created by the user.
       </p>
+      <div className="flex items-center justify-center">
+        <AddClassroomDialog />
+      </div>
     </ParagraphIsh>
   );
 }
@@ -105,7 +111,7 @@ function ClassroomCard({
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {filteredClassroom.map(
-        ({ id, name, classCode, classSession, createdAt }) => (
+        ({ id, name, classCode, classSession, createdAt, schoolYear, maxStudents }) => (
           <Card
             key={id}
             className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer"
@@ -121,7 +127,7 @@ function ClassroomCard({
                       {name}
                     </Link>
                   </CardTitle>
-                  <CardDescription>Testing lang muna</CardDescription>
+                  <CardDescription>S.Y: {schoolYear}</CardDescription>
                 </div>
                 <Badge variant="secondary" className="sm capitalize">
                   {classSession}
@@ -159,8 +165,8 @@ function ClassroomCard({
   );
 }
 
-export default function ClassroomArea({ username }: { username: string }) {
-  const { data: classrooms, isLoading } = useGetTeacherClassroom(username);
+export default function ClassroomArea({ userId }: { userId: string }) {
+  const { data: classrooms, isLoading } = useGetTeacherClassroom(userId);
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search") || "";
@@ -171,7 +177,7 @@ export default function ClassroomArea({ username }: { username: string }) {
   function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
       setIsCopied(true);
-  
+
       toast("Copied to clipboard!", {
         description: "Class code copied to clipboard.",
         duration: 2000,
@@ -242,6 +248,7 @@ export default function ClassroomArea({ username }: { username: string }) {
                 defaultValue={searchTerm}
                 onChange={handleSearchChange}
               />
+              <AddClassroomDialog />
             </div>
             <ClassroomCard
               classrooms={classrooms || []}

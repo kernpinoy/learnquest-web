@@ -11,6 +11,7 @@ import {
   getTeacherClassroom,
   getTeacherFullName,
 } from "~/server/functions/teachers";
+import { getUserId } from "~/server/functions/users";
 
 export async function generateStaticParams() {
   const teachers = getAllTeacherUsername();
@@ -28,18 +29,19 @@ export default async function TeacherClassesPage({
   const { username } = params;
 
   const teacherFullName = await getTeacherFullName(username);
+  const userId = await getUserId(username)
   const query = new QueryClient();
 
   await query.prefetchQuery({
-    queryKey: ["teacher-classroom", username],
-    queryFn: async () => getTeacherClassroom(username),
+    queryKey: ["teacher-classroom", userId],
+    queryFn: async () => getTeacherClassroom(userId!),
   });
 
   return (
     <ContentLayout title={`${teacherFullName}'s Class`}>
       <GoBack />
       <HydrationBoundary state={dehydrate(query)}>
-        <ClassroomArea username={username} />
+        <ClassroomArea userId={userId!} />
       </HydrationBoundary>
     </ContentLayout>
   );

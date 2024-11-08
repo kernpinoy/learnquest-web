@@ -91,7 +91,7 @@ export default function TeacherActionsDropdown({
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuItem
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer text-red-600 focus:text-red-600"
             onClick={() => setIsDeleteOpen(true)}
           >
             <Trash2 className="mr-2 h-4 w-4" />

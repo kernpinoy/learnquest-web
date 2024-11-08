@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTeacherClassroom } from "~/server/functions/teachers";
 
-export function useGetTeacherClassroom(username: string) {
+export function useGetTeacherClassroom(userId: string) {
   return useQuery({
-    queryKey: ["teacher-classroom", username],
-    queryFn: async () => getTeacherClassroom(username),
+    queryKey: ["teacher-classroom", userId],
+    queryFn: async () => getTeacherClassroom(userId),
   });
 }

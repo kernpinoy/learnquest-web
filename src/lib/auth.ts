@@ -7,7 +7,7 @@ import { env } from "~/env";
 const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
 export const lucia = new Lucia(adapter, {
-  sessionExpiresIn: new TimeSpan(1, 'w'),
+  sessionExpiresIn: new TimeSpan(3, 'd'),
   sessionCookie: {
     expires: false,
     attributes: {

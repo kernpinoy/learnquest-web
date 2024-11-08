@@ -4,6 +4,7 @@ import { createSafeActionClient } from "next-safe-action";
 import { changeUsernameFormSchema } from "~/lib/validation/change-teacher-username";
 import { changeUsername } from "../functions/teachers";
 import { db } from "../db";
+import { QueryClient } from "@tanstack/react-query";
 
 const action = createSafeActionClient();
 
@@ -18,6 +19,12 @@ export const changeUsernameAction = action
     const result = await db.transaction(async (tx) => {
       try {
         await changeUsername(userId, username);
+
+        // Invalidate relevant queries
+        const queryClient = new QueryClient();
+        await queryClient.invalidateQueries({
+          queryKey: ["teacher-classroom", userId]
+        });
 
         return { success: `Username changed successfully.` };
       } catch (error) {

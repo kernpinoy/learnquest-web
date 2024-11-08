@@ -13,13 +13,13 @@ export default async function AdminDashboardPage() {
   const { session, user } = await validateRequest();
 
   if (!session || !user || user.role !== "admin") {
-    redirect("/login");
+    redirect("/");
   }
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["teachers-card"],
+    queryKey: ["admin-teachers-card"],
     queryFn: getTeacherDetails,
   });
 

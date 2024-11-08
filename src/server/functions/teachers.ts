@@ -26,6 +26,33 @@ export async function getAllClassById(id: string) {
   return allClass;
 }
 
+export async function getTeacherInfo(userId: string) {
+  const [result] = await db
+    .select({
+      firstName: teachersInfo.firstName,
+      middleName: teachersInfo.middleName,
+      lastName: teachersInfo.lastName,
+    })
+    .from(teachersInfo)
+    .where(eq(teachersInfo.userId, userId));
+
+  return result;
+}
+
+export async function updateTeacherInfo(
+  firstName: string,
+  middleName: string,
+  lastName: string,
+  userId: string
+) {
+  const result = await db
+    .update(teachersInfo)
+    .set({ firstName, middleName, lastName })
+    .where(eq(teachersInfo.userId, userId));
+
+  return result;
+}
+
 export async function getAllTeacherUsername() {
   const allTeacherUsername = await db
     .select({ username: users.username })
@@ -72,7 +99,7 @@ export async function getTeacherFullName(username: string) {
   return result.fullname;
 }
 
-export async function getTeacherClassroom(username: string) {
+export async function getTeacherClassroom(userId: string) {
   const result = await db
     .select({
       id: classrooms.id,
@@ -81,19 +108,19 @@ export async function getTeacherClassroom(username: string) {
       createdAt: classrooms.createdAt,
       classSession: classrooms.classSession,
       classCode: classrooms.classCode,
+      maxStudents: classrooms.maxStudents,
+      schoolYear: classrooms.schoolYear,
     })
     .from(classrooms)
     .innerJoin(teachersInfo, eq(classrooms.teacherId, teachersInfo.id))
     .innerJoin(users, eq(users.id, teachersInfo.userId))
-    .where(eq(users.username, username));
+    .where(eq(users.id, userId));
 
   return result;
 }
 
 export async function deleteTeacher(userId: string) {
-  const result = await db
-    .delete(users)
-    .where(eq(users.id, userId));
+  const result = await db.delete(users).where(eq(users.id, userId));
 
   return result;
 }
@@ -101,9 +128,28 @@ export async function deleteTeacher(userId: string) {
 export async function archiveTeacher(teacherId: string) {
   const result = await db
     .update(teachersInfo)
-    .set({ archived: true })
+    .set({ archived: true, archivedAt: new Date() })
     .where(eq(teachersInfo.id, teacherId))
     .returning();
+
+  return result;
+}
+
+export async function unarchiveTeacher(teacherId: string) {
+  const result = await db
+    .update(teachersInfo)
+    .set({ archived: false, archivedAt: null })
+    .where(eq(teachersInfo.id, teacherId))
+    .returning();
+
+  return result;
+}
+
+export async function getArchiveTeachers() {
+  const result = await db
+    .select()
+    .from(teachersInfo)
+    .where(eq(teachersInfo.archived, true));
 
   return result;
 }

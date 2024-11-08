@@ -38,7 +38,7 @@ export default function ClassManagement() {
     { name: 'English Literature', type: 'folder', icon: <Folder className="h-4 w-4" /> },
     { name: 'History', type: 'folder', icon: <Folder className="h-4 w-4" /> },
     { name: 'Algebra Basics.pdf', type: 'file', icon: <FileText className="h-4 w-4" /> },
-    { name: 'Photosynthesis Diagram.jpg', type: 'file', icon: <Image className="h-4 w-4" alt="Image ng kambing"/> },
+    { name: 'Photosynthesis Diagram.jpg', type: 'file', icon: <Image className="h-4 w-4" /> },
     { name: 'Shakespeare Introduction.docx', type: 'file', icon: <FileText className="h-4 w-4" /> },
     { name: 'World War II Timeline.pdf', type: 'file', icon: <FileText className="h-4 w-4" /> },
     { name: 'Chemistry Lab Safety.mp4', type: 'file', icon: <Video className="h-4 w-4" /> },
@@ -99,7 +99,7 @@ export default function ClassManagement() {
                             value={newStudent.gender}
                             onChange={(e) => setNewStudent({...newStudent, gender: e.target.value})}
                             className="col-span-3"
-                 Mathematics         />
+                          />
                         </div>
                       </div>
                       <DialogFooter>

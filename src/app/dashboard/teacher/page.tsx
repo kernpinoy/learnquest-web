@@ -9,7 +9,7 @@ import ContentLayout from "~/components/sidebar/shared/content-layout";
 import { validateRequest } from "~/lib/validate-request";
 import { getTeacherClassroom } from "~/server/functions/teachers";
 
-export default async function AdminDashboardPage() {
+export default async function TeacherDashboardPage() {
   const { session, user } = await validateRequest();
   
   if (!session && !user) {
@@ -19,18 +19,17 @@ export default async function AdminDashboardPage() {
   if (user.role !== "teacher") {
     redirect(`/dashboard/${user.role}`);
   }
-
   const query = new QueryClient();
 
   await query.prefetchQuery({
-    queryKey: ["teacher-classroom", user.username],
-    queryFn: async () => getTeacherClassroom(user.username),
+    queryKey: ["teacher-classroom", user.id],
+    queryFn: async () => getTeacherClassroom(user.id),
   });
 
   return (
     <ContentLayout title="Dashboard">
       <HydrationBoundary state={dehydrate(query)}>
-        <ClassroomArea username={user.username} />
+        <ClassroomArea userId={user.id} />
       </HydrationBoundary>
     </ContentLayout>
   );

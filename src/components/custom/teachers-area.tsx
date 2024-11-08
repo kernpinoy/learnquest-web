@@ -31,7 +31,7 @@ function NoTeachers() {
   return (
     <ParagraphIsh>
       <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-words text-xl font-medium tracking-tight text-center">
+        <p className="scroll-m-20 break-all text-xl font-medium tracking-tight text-center">
           There are no teachers accounts. Click the button below to add one.
         </p>
       </div>
