@@ -22,7 +22,7 @@ export default async function AdminSettings() {
           <TabsTrigger value="user-info">User Info</TabsTrigger>
         </TabsList>
         <TabsContent value="user-info">
-          <UserInfoForm userId={user.id} />-
+          <UserInfoForm userId={user.id} />
         </TabsContent>
       </Tabs>
     </ContentLayout>

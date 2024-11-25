@@ -19,7 +19,7 @@ export const users = pgTable("users", {
     .$defaultFn(() => crypto.randomUUID()),
   username: text("username").notNull().unique(),
   hashedPassword: text("hashed_password").notNull(),
-  salt: text("salt").notNull().unique(),  
+  salt: text("salt").notNull().unique(),
   role: role("role").notNull().default("teacher"),
   archived: boolean("archived").notNull().default(false),
   archivedAt: timestamp("archived_at", {
@@ -114,4 +114,22 @@ export const sessions = pgTable("sessions", {
     withTimezone: true,
     mode: "date",
   }).notNull(),
+});
+
+export const file_upload = pgTable("file_upload", {
+  id: text("id").$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  classroomId: text("classroom_id")
+    .notNull()
+    .references(() => classrooms.id, { onDelete: "cascade" }),
+  bucket: text("bucket"),
+  fileName: text("file_name"),
+  originalName: text("original_name"),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+    mode: "date",
+  }).notNull(),
+  size: integer("size"),
 });

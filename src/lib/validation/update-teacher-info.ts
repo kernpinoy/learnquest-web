@@ -22,9 +22,9 @@ export const updateTeacherInfoSchema = z.object({
         .trim()
         .split(" ")
         .map((word) => {
-          // Special handling for particles like "dela", "de", "van", etc.
+          // Special handling for particles like van", etc.
           const lowerWord = word.toLowerCase();
-          if (["dela", "de", "van", "von"].includes(lowerWord)) {
+          if (["van", "von"].includes(lowerWord)) {
             return lowerWord;
           }
           return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
