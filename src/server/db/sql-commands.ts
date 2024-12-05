@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { teachersInfo } from "./schema";
+import { teachersInfo, studentsInfo } from "./schema";
 
 export const teacherFullName = sql<string>`CONCAT(
         ${teachersInfo.firstName},
@@ -8,3 +8,11 @@ export const teacherFullName = sql<string>`CONCAT(
         '. ',
         ${teachersInfo.lastName}
       )`;
+
+export const studentFullName = sql<string>`CONCAT(
+  ${studentsInfo.firstName},
+  ' ',
+  COALESCE(LEFT(${studentsInfo.middleName}, 1), ''),
+  '. ',
+  ${studentsInfo.lastName}
+  )`;

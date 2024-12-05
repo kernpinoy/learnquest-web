@@ -78,6 +78,13 @@
       "when": 1731036708766,
       "tag": "0010_marvelous_richard_fisk",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1733210189941,
+      "tag": "0011_slow_stryfe",
+      "breakpoints": true
     }
   ]
 }

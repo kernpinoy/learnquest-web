@@ -5,6 +5,7 @@ import { Control, ControllerRenderProps } from "react-hook-form";
 import { PasswordInput } from "~/components/custom/password-input";
 import {
   FormControl,
+  FormDescription,
   FormField as FormFld,
   FormItem,
   FormLabel,
@@ -20,6 +21,7 @@ interface FormFieldProps {
   placeholder?: string;
   imgSrc?: string;
   imgSvg?: ReactElement;
+  description?: string;
 }
 
 interface RenderInputProps {
@@ -39,7 +41,7 @@ function RenderInput({ type, field, placeholder }: RenderInputProps) {
 }
 
 export default function FormField(props: FormFieldProps) {
-  const { control, name, fieldType, label, placeholder } = props;
+  const { control, name, fieldType, label, placeholder, description } = props;
 
   return (
     <FormFld
@@ -55,6 +57,7 @@ export default function FormField(props: FormFieldProps) {
               field={field}
             />
           </FormControl>
+          <FormDescription>{description}</FormDescription>
           <FormMessage />
         </FormItem>
       )}

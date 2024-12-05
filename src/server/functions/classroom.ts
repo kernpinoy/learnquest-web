@@ -1,78 +1,32 @@
 "use server";
-import { createSafeActionClient } from "next-safe-action";
-import { addClassroomSchema } from "~/lib/validation/add-classroom";
+
 import { db } from "../db";
-import { teachersInfo, classrooms, users } from "../db/schema";
-import { revalidatePath } from "next/cache";
-import generateClassCode from "~/lib/classcode-gen";
-import { eq } from "drizzle-orm";
-import { validateRequest } from "~/lib/validate-request";
+import { classrooms, studentsInfo, users } from "../db/schema";
+import { asc, eq } from "drizzle-orm";
+import { studentFullName } from "../db/sql-commands";
 
-const action = createSafeActionClient();
+export async function getClassroomStudents(classCode: string) {
+  // grab first the classroom id via checking class code
+  const [classroom] = await db
+    .select({
+      id: classrooms.id,
+    })
+    .from(classrooms)
+    .where(eq(classrooms.classCode, classCode));
 
-export const createClassroom = action
-  .schema(addClassroomSchema)
-  .action(
-    async ({
-      parsedInput: { name, classSession, maxStudents, schoolYear },
-    }) => {
-      const { session, user } = await validateRequest();
+  // filter the students_info table via the classroom id
+  const students = await db
+    .select({
+      id: studentsInfo.id,
+      lrn: users.username,
+      fullName: studentFullName,
+      sex: studentsInfo.gender,
+      createdAt: studentsInfo.createdAt,
+    })
+    .from(studentsInfo)
+    .innerJoin(users, eq(users.id, studentsInfo.userId))
+    .where(eq(studentsInfo.classroomId, classroom.id))
+    .orderBy(asc(studentFullName));
 
-      if (!session || !user) {
-        return {
-          error: "Not allowed to do the operation.",
-        };
-      }
-
-      // Find the teacher ID based on the logged-in user
-      const teacherResult = await db
-        .select({ teacherId: teachersInfo.id })
-        .from(teachersInfo)
-        .innerJoin(users, eq(teachersInfo.userId, user.id));
-
-      if (teacherResult.length === 0) {
-        return {
-          error: "Teacher account not found.",
-        };
-      }
-
-      const teacherId = teacherResult[0].teacherId;
-
-      // Proceed with the transaction to create the classroom
-      const result = await db.transaction(async (tx) => {
-        try {
-          // Insert new classroom record
-          const classCode = generateClassCode(7); // Generate a class code
-          const [newClassroom] = await tx
-            .insert(classrooms)
-            .values({
-              name,
-              classSession,
-              maxStudents,
-              schoolYear,
-              teacherId,
-              classCode,
-            })
-            .returning();
-
-          return {
-            success: "Classroom created successfully.",
-            classroom: newClassroom,
-          };
-        } catch (error) {
-          // Rollback if something goes wrong
-          tx.rollback();
-          return { error: "Something went wrong. Please try again." };
-        }
-      });
-
-      if (result.error) {
-        return { error: result.error };
-      }
-
-      // Revalidate the path to update the UI
-      revalidatePath("/dashboard/teacher");
-
-      return { success: result.success };
-    }
-  );
+  return students;
+}

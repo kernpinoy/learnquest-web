@@ -11,7 +11,7 @@ import { getTeacherClassroom } from "~/server/functions/teachers";
 
 export default async function TeacherDashboardPage() {
   const { session, user } = await validateRequest();
-  
+
   if (!session && !user) {
     redirect("/");
   }
@@ -19,12 +19,15 @@ export default async function TeacherDashboardPage() {
   if (user.role !== "teacher") {
     redirect(`/dashboard/${user.role}`);
   }
+
   const query = new QueryClient();
 
   await query.prefetchQuery({
     queryKey: ["teacher-classroom", user.id],
     queryFn: async () => getTeacherClassroom(user.id),
   });
+
+  console.log(query);
 
   return (
     <ContentLayout title="Dashboard">

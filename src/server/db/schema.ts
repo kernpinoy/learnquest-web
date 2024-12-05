@@ -132,4 +132,5 @@ export const file_upload = pgTable("file_upload", {
     mode: "date",
   }).notNull(),
   size: integer("size"),
+  fileType: text("filetype"),
 });
