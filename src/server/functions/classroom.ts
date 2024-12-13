@@ -26,7 +26,7 @@ export async function getClassroomStudents(classCode: string) {
     .from(studentsInfo)
     .innerJoin(users, eq(users.id, studentsInfo.userId))
     .where(eq(studentsInfo.classroomId, classroom.id))
-    .orderBy(asc(studentFullName));
+    .orderBy(asc(studentsInfo.lastName));
 
   return students;
 }

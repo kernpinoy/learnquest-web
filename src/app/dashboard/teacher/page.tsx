@@ -27,8 +27,6 @@ export default async function TeacherDashboardPage() {
     queryFn: async () => getTeacherClassroom(user.id),
   });
 
-  console.log(query);
-
   return (
     <ContentLayout title="Dashboard">
       <HydrationBoundary state={dehydrate(query)}>

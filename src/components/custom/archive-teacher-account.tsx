@@ -26,10 +26,8 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-  DrawerClose
+  DrawerClose,
 } from "../ui/drawer";
-import { revalidatePath } from "next/cache";
-import { usePathname, useRouter } from "next/navigation";
 
 interface ArchiveTeacherAccountProps {
   open: boolean;
@@ -62,6 +60,7 @@ export default function ArchiveTeacherAccount({
         toast.dismiss();
         toast.success(data?.success, { duration: 1000, closeButton: false });
         form.reset();
+        closePopup();
       }
     },
     onError({ error }) {

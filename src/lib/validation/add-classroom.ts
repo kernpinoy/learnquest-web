@@ -5,13 +5,14 @@ export const addClassroomSchema = z.object({
   name: z
     .string()
     .min(1, "Name must not be empty.")
+    .regex(/^[^\d]*$/, "Name must not contain numbers.")
     .transform((str) => str.trim()),
   classSession: z.enum(["morning", "afternoon"]).default("morning"),
   schoolYear: z
     .string()
     .regex(
       /^\d{4}\s?-\s?\d{4}$/,
-      "School year must be in format YYYY - YYYY or YYYY-YYYY."
+      "School year must be in format YYYY - YYYY or YYYY-YYYY.",
     )
     .transform((year) => {
       const [start, end] = year.split("-").map((str) => str.trim());

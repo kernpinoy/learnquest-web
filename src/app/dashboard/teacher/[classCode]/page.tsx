@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import GoBack from "~/components/ui/go-back";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
-import StudentTab from "./student-tab/student-tab";
+import StudentTab from "~/components/student-stuffs/student-tab/student-tab";
 import { validateRequest } from "~/lib/validate-request";
 import { redirect } from "next/navigation";
 import {

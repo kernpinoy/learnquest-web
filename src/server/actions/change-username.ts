@@ -23,7 +23,7 @@ export const changeUsernameAction = action
         // Invalidate relevant queries
         const queryClient = new QueryClient();
         await queryClient.invalidateQueries({
-          queryKey: ["teacher-classroom", userId]
+          queryKey: ["teacher-classroom", userId],
         });
 
         return { success: `Username changed successfully.` };

@@ -7,6 +7,7 @@ import { classrooms, studentsInfo, users } from "../db/schema";
 import { getSalt, hashPassword } from "~/lib/hash";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { env } from "~/env";
 
 const action = createSafeActionClient();
 

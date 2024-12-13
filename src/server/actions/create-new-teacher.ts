@@ -62,7 +62,8 @@ export const createTeacher = action
       }
 
       // Revalidate path
+      console.log(firstName, middleName, lastName, username, password);
       revalidatePath("/dashboard/admin");
       return { success: result.success };
-    }
+    },
   );

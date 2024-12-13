@@ -7,18 +7,27 @@ export const addTeacherFormSchema = z
     firstName: z
       .string()
       .min(1, "First name is required")
+      .regex(
+        /^[A-Za-z\s'-]+$/,
+        "First name must not contain numbers or special characters.",
+      )
       .transform((str) => {
         return str
           .trim()
           .split(" ")
           .map(
-            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            (word) =>
+              word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
           )
           .join(" ");
       }),
     middleName: z
       .string()
       .min(1, "Middle name is required")
+      .regex(
+        /^[A-Za-z\s'-]+$/,
+        "Middle name must not contain numbers or special characters.",
+      )
       .transform((str) => {
         return str
           .trim()
@@ -26,7 +35,7 @@ export const addTeacherFormSchema = z
           .map((word) => {
             // Special handling for particles like "dela", "de", "van", etc.
             const lowerWord = word.toLowerCase();
-            if (["dela", "de", "van", "von"].includes(lowerWord)) {
+            if (["de", "van", "von"].includes(lowerWord)) {
               return lowerWord;
             }
             return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
@@ -36,6 +45,10 @@ export const addTeacherFormSchema = z
     lastName: z
       .string()
       .min(1, "Last name is required")
+      .regex(
+        /^[A-Za-z\s'-]+$/,
+        "Last name must not contain numbers or special characters.",
+      )
       .transform((str) => {
         return str
           .trim()

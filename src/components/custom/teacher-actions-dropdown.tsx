@@ -18,7 +18,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { ResponsiveAlertDialog } from "../ui/responsive-alert";
 import ChangeTeacherPassword from "./change-teacher-password";
 import ChangeTeacherUsername from "./change-teacher-username";
 import ArchiveTeacherAccount from "./archive-teacher-account";
@@ -91,7 +90,7 @@ export default function TeacherActionsDropdown({
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuItem
-            className="hover:cursor-pointer text-red-600 focus:text-red-600"
+            className="text-red-600 hover:cursor-pointer focus:text-red-600"
             onClick={() => setIsDeleteOpen(true)}
           >
             <Trash2 className="mr-2 h-4 w-4" />
