@@ -14,7 +14,11 @@ export const updateTeacherInfo = action
   .action(async ({ parsedInput: { firstName, middleName, lastName } }) => {
     const { session, user } = await validateRequest();
 
-    if (!session || !user) {
+    if (
+      !session ||
+      !user ||
+      !(user.role === "admin" || user.role === "teacher")
+    ) {
       return { error: "Unauthorized" };
     }
 

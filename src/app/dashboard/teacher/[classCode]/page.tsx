@@ -32,7 +32,7 @@ export default async function ClassManagementPage({
   });
 
   return (
-    <ContentLayout title="Classroom files">
+    <ContentLayout title="Classroom Files">
       <div className="min-h-screen">
         <GoBack />
         <Tabs defaultValue="profile" className="w-full">
