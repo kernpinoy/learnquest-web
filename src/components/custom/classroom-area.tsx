@@ -58,14 +58,14 @@ function ClassroomSkeleton() {
   );
 }
 
-function NoClassrooms() {
+function NoClassrooms({ userId }: { userId: string }) {
   return (
     <ParagraphIsh>
-      <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
+      <p className="scroll-m-20 break-words break-all text-center text-xl font-medium tracking-tight">
         There are no classrooms created by the user.
       </p>
       <div className="flex items-center justify-center">
-        <AddClassroomDialog />
+        <AddClassroomDialog userId={userId} />
       </div>
     </ParagraphIsh>
   );
@@ -74,7 +74,7 @@ function NoClassrooms() {
 function NoSearchResults() {
   return (
     <ParagraphIsh>
-      <p className="scroll-m-20 break-all break-words text-xl font-medium tracking-tight text-center">
+      <p className="scroll-m-20 break-words break-all text-center text-xl font-medium tracking-tight">
         No classrooms found matching your search criteria.
       </p>
     </ParagraphIsh>
@@ -100,7 +100,7 @@ function ClassroomCard({
         classroom.classCode?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         classroom.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         classroom.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        classroom.teacherId?.toLowerCase().includes(searchTerm.toLowerCase())
+        classroom.teacherId?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [classrooms, searchTerm]);
 
@@ -111,13 +111,21 @@ function ClassroomCard({
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {filteredClassroom.map(
-        ({ id, name, classCode, classSession, createdAt, schoolYear, maxStudents }) => (
+        ({
+          id,
+          name,
+          classCode,
+          classSession,
+          createdAt,
+          schoolYear,
+          maxStudents,
+        }) => (
           <Card
             key={id}
-            className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer"
+            className="rounded-lg transition-all hover:cursor-pointer hover:shadow-lg"
           >
             <CardHeader>
-              <div className="flex justify-between items-start">
+              <div className="flex items-start justify-between">
                 <div>
                   <CardTitle className="text-lg font-medium hover:underline">
                     <Link
@@ -135,8 +143,8 @@ function ClassroomCard({
               </div>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center mb-4">
-                <p className="text-sm font-medium ">Class code: {classCode}</p>
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-sm font-medium">Class code: {classCode}</p>
                 <TooltipProvider disableHoverableContent>
                   <Tooltip delayDuration={100}>
                     <TooltipTrigger asChild>
@@ -159,13 +167,19 @@ function ClassroomCard({
               </p>
             </CardContent>
           </Card>
-        )
+        ),
       )}
     </div>
   );
 }
 
-export default function ClassroomArea({ userId }: { userId: string }) {
+export default function ClassroomArea({
+  userId,
+  isAdmin = false,
+}: {
+  userId: string;
+  isAdmin?: boolean;
+}) {
   const { data: classrooms, isLoading } = useGetTeacherClassroom(userId);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -179,7 +193,7 @@ export default function ClassroomArea({ userId }: { userId: string }) {
       setIsCopied(true);
 
       toast("Copied to clipboard!", {
-        description: "Class code copied to clipboard.",
+        description: `Class code copied to clipboard.`,
         duration: 2000,
         richColors: true,
         onAutoClose: () => {
@@ -205,7 +219,7 @@ export default function ClassroomArea({ userId }: { userId: string }) {
 
       router.replace(`${pathName}?${params.toString()}`);
     },
-    [searchParams, router, pathName]
+    [searchParams, router, pathName],
   );
 
   return (
@@ -230,7 +244,7 @@ export default function ClassroomArea({ userId }: { userId: string }) {
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.3 }}
           >
-            <NoClassrooms />
+            <NoClassrooms userId={userId} />
           </motion.div>
         )}
         {!isLoading && classrooms && classrooms.length > 0 && (
@@ -241,14 +255,14 @@ export default function ClassroomArea({ userId }: { userId: string }) {
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.3 }}
           >
-            <div className="flex justify-between mb-4">
+            <div className="mb-4 flex justify-between">
               <Input
                 className="w-72 lg:w-96"
                 placeholder="Search..."
                 defaultValue={searchTerm}
                 onChange={handleSearchChange}
               />
-              <AddClassroomDialog />
+              <AddClassroomDialog userId={userId} />
             </div>
             <ClassroomCard
               classrooms={classrooms || []}

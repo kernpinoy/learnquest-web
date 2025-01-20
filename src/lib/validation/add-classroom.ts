@@ -31,14 +31,16 @@ export const addClassroomSchema = z.object({
     .positive("Max students must be a positive integer.")
     .min(1, "Classroom must allow at least one student.")
     .max(100, "Classroom is up to 100 only."),
+  userId: z.string(),
 });
 
 export type AddClassroom = z.infer<typeof addClassroomSchema>;
 export const resolver = zodResolver(addClassroomSchema);
 
-export const defaultValues: AddClassroom = {
+export const defaultValues = (userId: string): AddClassroom => ({
   name: "",
   classSession: "morning",
   schoolYear: `${new Date().getFullYear()} - ${new Date().getFullYear() + 1}`,
   maxStudents: 1,
-};
+  userId,
+});

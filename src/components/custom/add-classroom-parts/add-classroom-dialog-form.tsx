@@ -25,8 +25,8 @@ import {
 } from "~/components/ui/select";
 import { createClassroom } from "~/server/actions/create-classroom";
 
-export default function AddClassroomDialogForm() {
-  const form = useAddClassroomForm();
+export default function AddClassroomDialog({ userId }: { userId: string }) {
+  const form = useAddClassroomForm(userId);
   const closeRef = useRef<HTMLButtonElement>(null!);
 
   const { execute, status } = useAction(createClassroom, {
@@ -49,6 +49,7 @@ export default function AddClassroomDialogForm() {
   });
 
   function onSubmit(values: AddClassroom) {
+    console.log(values);
     execute(values);
   }
 
@@ -154,7 +155,17 @@ export default function AddClassroomDialogForm() {
             )}
           />
 
-          <Button ref={closeRef} type="submit" aria-disabled={status === "executing"}>
+          <FormField
+            control={form.control}
+            name="userId"
+            render={({ field }) => <Input type="hidden" {...field} />}
+          />
+
+          <Button
+            ref={closeRef}
+            type="submit"
+            aria-disabled={status === "executing"}
+          >
             Add Classroom
           </Button>
         </div>

@@ -13,7 +13,7 @@ export const createClassroom = action
   .schema(addClassroomSchema)
   .action(
     async ({
-      parsedInput: { name, classSession, maxStudents, schoolYear },
+      parsedInput: { name, classSession, maxStudents, schoolYear, userId },
     }) => {
       const { session, user } = await validateRequest();
 
@@ -23,21 +23,18 @@ export const createClassroom = action
         };
       }
 
-      let teacherResult;
-
-      // Find the teacher ID based on the logged-in user
-      teacherResult = await db
+      const data = await db
         .select({ teacherId: teachersInfo.id })
         .from(teachersInfo)
-        .innerJoin(users, eq(teachersInfo.userId, user.id));
+        .where(eq(teachersInfo.userId, userId));
 
-      if (teacherResult.length === 0) {
+      if (!data) {
         return {
-          error: "Teacher account not found.",
+          error: "Teacher ID not found.",
         };
       }
 
-      const teacherId = teacherResult[0].teacherId;
+      const teacherId = data[0]?.teacherId;
 
       // Proceed with the transaction to create the classroom
       const result = await db.transaction(async (tx) => {
@@ -69,9 +66,12 @@ export const createClassroom = action
         return { error: result.error };
       }
 
-      // Revalidate the path to update the UI
-      revalidatePath("/dashboard/teacher");
+      if (user.role == "admin") {
+        revalidatePath("/dashboard/admin/[username]", "page");
+      } else {
+        revalidatePath("/dashboard/teacher/");
+      }
 
       return { success: result.success, classroom: result.classroom };
-    }
+    },
   );
