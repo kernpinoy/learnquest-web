@@ -11,33 +11,31 @@ import {
 import { Button } from "~/components/ui/button";
 import { ArchiveRestore, Trash2, MoreVertical } from "lucide-react";
 import { useState } from "react";
-import DeleteTeacherAccount from "./delete-teacher-acount";
-import UnarchiveTeacherAccount from "./unarchive-teacher-account";
+// import DeleteClassroom from "./delete-classroom"; // Adjust the component for deleting a classroom
+// import UnarchiveClassroom from "./unarchive-classroom"; // Adjust the component for unarchiving a classroom
 
-interface ArchivedTeacherActionsDropdownProps {
-  userId: string;
-  teacherId: string;
+interface ArchivedClassroomActionsDropdownProps {
+  classroomId: string;
 }
 
-export default function ArchivedTeacherActionsDropdown({
-  userId,
-  teacherId,
-}: ArchivedTeacherActionsDropdownProps) {
+export default function ArchivedClassroomActionsDropdown({
+  classroomId,
+}: ArchivedClassroomActionsDropdownProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isUnarchiveOpen, setIsUnarchiveOpen] = useState(false);
 
   return (
     <>
-      <UnarchiveTeacherAccount
+      {/* <UnarchiveClassroom
         open={isUnarchiveOpen}
         onOpenChange={setIsUnarchiveOpen}
-        teacherId={teacherId}
+        classroomId={classroomId}
       />
-      <DeleteTeacherAccount
+      <DeleteClassroom
         open={isDeleteOpen}
         onOpenChange={setIsDeleteOpen}
-        userId={userId}
-      />
+        classroomId={classroomId}
+      /> */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -57,7 +55,7 @@ export default function ArchivedTeacherActionsDropdown({
             onClick={() => setIsDeleteOpen(true)}
           >
             <Trash2 className="mr-2 h-4 w-4" />
-            <span>Delete this account</span>
+            <span>Delete this classroom</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

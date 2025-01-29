@@ -12,10 +12,12 @@ import {
 import {
   getClassroomName,
   getClassroomStudents,
+  getStudentGameScore,
 } from "~/server/functions/classroom";
 import { FileManager } from "~/components/upload-stuff/file-manager";
 import { getUploadedFiles } from "~/server/functions/uploads";
 import ClassroomSettings from "./classroom-settings";
+import StudentLeaderboard from "~/components/student-stuffs/student-leaderboard";
 
 export default async function ClassManagementPage({
   params,
@@ -43,6 +45,11 @@ export default async function ClassManagementPage({
     queryKey: ["teacher-classroom-students", classCode],
   });
 
+  queryClient.prefetchQuery({
+    queryKey: ["teacher-clasroom-students-leaderboards", classCode],
+    queryFn: async () => getStudentGameScore(classCode),
+  });
+
   return (
     <ContentLayout title={await name} isTeacher={true}>
       <div className="min-h-screen">
@@ -68,7 +75,11 @@ export default async function ClassManagementPage({
               <FileManager classCode={classCode} />
             </HydrationBoundary>
           </TabsContent>
-          <TabsContent value="leaderboard">TODO: LEADERBOARD!</TabsContent>
+          <TabsContent value="leaderboard">
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <StudentLeaderboard classCode={classCode} />
+            </HydrationBoundary>
+          </TabsContent>
           <TabsContent value="classroomSettings">
             <ClassroomSettings classCode={classCode} />
           </TabsContent>

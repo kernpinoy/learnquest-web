@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "../db";
-import { classrooms, studentsInfo, users } from "../db/schema";
-import { asc, eq } from "drizzle-orm";
+import { classrooms, gameScores, studentsInfo, users } from "../db/schema";
+import { asc, desc, eq, and } from "drizzle-orm";
 import { studentFullName } from "../db/sql-commands";
 
 export async function getClassroomStudents(classCode: string) {
@@ -43,4 +43,36 @@ export async function getClassroomName(classCode: string) {
   });
 
   return result!.name;
+}
+
+export async function getStudentGameScore(classCode: string) {
+  const classroom = await db.query.classrooms.findFirst({
+    where: eq(classrooms.classCode, classCode),
+  });
+
+  const result = await db
+    .select({
+      gameScore: gameScores.score,
+      firstName: studentsInfo.firstName,
+      fullName: studentFullName,
+      id: gameScores.id,
+    })
+    .from(gameScores)
+    .innerJoin(studentsInfo, eq(studentsInfo.userId, gameScores.userId))
+    .where(eq(gameScores.classroomId, classroom!.id))
+    .orderBy(desc(gameScores.score));
+
+  return result;
+}
+
+export async function getArchivedClassroomsByTeacher(teacherId: string) {
+  const classroomsList = await db
+    .select()
+    .from(classrooms)
+    .where(
+      and(eq(classrooms.teacherId, teacherId), eq(classrooms.archived, true)),
+    )
+    .orderBy(desc(classrooms.createdAt)); // Sort by newest first
+
+  return classroomsList;
 }

@@ -350,7 +350,7 @@ export default function ClassManagement() {
                   {students.slice(0, 3).map((student, index) => (
                     <Card key={student.name} className="w-32">
                       <CardContent className="flex flex-col items-center p-4">
-                        <Avatar className="mb-2 h-16 w-16">
+                        <Avatar className="h-30 w-30 mb-2">
                           <AvatarImage
                             src={student.avatar}
                             alt={student.name}

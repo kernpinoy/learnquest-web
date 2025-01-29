@@ -148,7 +148,13 @@ export async function unarchiveTeacher(teacherId: string) {
 
 export async function getArchiveTeachers() {
   const result = await db
-    .select()
+    .select({
+      id: teachersInfo.id,
+      userId: teachersInfo.userId,
+      archived: teachersInfo.archived,
+      fullName: teacherFullName,
+      archivedAt: teachersInfo.createdAt,
+    })
     .from(teachersInfo)
     .where(eq(teachersInfo.archived, true));
 
@@ -173,6 +179,15 @@ export async function changePassword(userId: string, newPassword: string) {
     .update(users)
     .set({ hashedPassword: hashedPw, salt: saltText })
     .where(eq(users.id, userId));
+
+  return result;
+}
+
+export async function getTeacher(userId: string) {
+  const result = await db
+    .select()
+    .from(teachersInfo)
+    .where(eq(teachersInfo.userId, userId));
 
   return result;
 }
