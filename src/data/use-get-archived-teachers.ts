@@ -3,7 +3,7 @@ import { getArchiveTeachers } from "~/server/functions/teachers";
 
 export function useGetArchiveTeacher() {
   return useQuery({
-    queryKey: ["teacher-archived"],
+    queryKey: ["admin-teacher-archived"],
     queryFn: async () => getArchiveTeachers(),
   });
 }

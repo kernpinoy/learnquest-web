@@ -28,13 +28,13 @@ export default function SheetMenu({ isAdmin = true }: MenuProps) {
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 h-full w-full">
-        <ul className="flex flex-col min-h-[calc(100vh-48px-36px-16px-32px)] lg:min-h-[calc(100vh-32px-40px-32px)] items-start space-y-1 px-2">
+        <ul className="flex min-h-[calc(100vh-48px-36px-16px-32px)] flex-col items-start space-y-1 px-2 lg:min-h-[calc(100vh-32px-40px-32px)]">
           {menuList.map(({ groupLabel, menus }, index) => (
             // Group label
             <li key={index} className={cn("w-full", groupLabel ? "pt-5" : "")}>
               {/* Render Label */}
               {isOpen && groupLabel ? (
-                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
+                <p className="max-w-[248px] truncate px-4 pb-2 text-sm font-medium text-muted-foreground">
                   {groupLabel}
                 </p>
               ) : !isOpen && groupLabel ? (
@@ -42,7 +42,7 @@ export default function SheetMenu({ isAdmin = true }: MenuProps) {
                   {/* Render Label with tooltip closed when sidebar closed*/}
                   <Tooltip delayDuration={100}>
                     <TooltipTrigger className="w-full" asChild>
-                      <div className="w-full flex justify-center items-center">
+                      <div className="flex w-full items-center justify-center">
                         <Ellipsis className="h-5 w-5" />
                       </div>
                     </TooltipTrigger>
@@ -62,10 +62,10 @@ export default function SheetMenu({ isAdmin = true }: MenuProps) {
                           <TooltipTrigger asChild>
                             <Button
                               variant={active ? "secondary" : "ghost"}
-                              className="w-full justify-start h-10 mb-1"
+                              className="mb-1 h-10 w-full justify-start"
                               asChild
                             >
-                              <Link href={href}>
+                              <Link href={href} prefetch={true}>
                                 <span
                                   className={cn(isOpen === false ? "" : "mr-4")}
                                 >
@@ -76,7 +76,7 @@ export default function SheetMenu({ isAdmin = true }: MenuProps) {
                                     "max-w-[200px] truncate",
                                     !isOpen
                                       ? "-translate-x-96 opacity-100"
-                                      : "translate-x-0 opacity-100"
+                                      : "translate-x-0 opacity-100",
                                   )}
                                 >
                                   {label}
@@ -101,7 +101,7 @@ export default function SheetMenu({ isAdmin = true }: MenuProps) {
                         submenus={submenus}
                       />
                     </div>
-                  )
+                  ),
               )}
             </li>
           ))}

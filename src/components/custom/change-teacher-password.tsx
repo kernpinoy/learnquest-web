@@ -60,6 +60,7 @@ export default function ChangeTeacherPassword({
         toast.dismiss();
         toast.success(data?.success, { duration: 1000, closeButton: false });
         form.reset();
+        closePopup();
       }
     },
     onError({ error }) {

@@ -1,8 +1,15 @@
 "use client";
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
 import useUpdateTeacherInfoForm from "~/hooks/use-update-teacher-info-form";
-import { type UpdateTeacherInfo } from "~/lib/validation/update-teacher-info";
 import { Card, CardContent } from "~/components/ui/card";
 import { useAction } from "next-safe-action/hooks";
 import { updateTeacherInfo } from "~/server/actions/update-teacher";
@@ -11,6 +18,7 @@ import { useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Input } from "~/components/ui/input";
+import { UpdateTeacherInfo } from "~/lib/validation/update-teacher-info";
 
 interface PersonalInfoFormProps {
   teacherInfo: UpdateTeacherInfo;
@@ -57,7 +65,7 @@ export default function PersonalInfoForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
-          <CardContent className="pt-6 space-y-4">
+          <CardContent className="space-y-4 pt-6">
             <FormField
               control={form.control}
               name="firstName"

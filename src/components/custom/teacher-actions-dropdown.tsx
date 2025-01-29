@@ -57,6 +57,7 @@ export default function TeacherActionsDropdown({
         onOpenChange={setIsDeleteOpen}
         userId={userId}
       />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button className="right-0" variant="ghost" size="icon" asChild>

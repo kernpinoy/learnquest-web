@@ -21,7 +21,7 @@ export default async function TeacherSettings() {
   const teacherInfo = getTeacherInfo(user.id);
 
   return (
-    <ContentLayout title="Settings">
+    <ContentLayout title="Settings" isTeacher={true}>
       <Tabs defaultValue="personal-info">
         <TabsList>
           <TabsTrigger value="personal-info">Personal Info</TabsTrigger>

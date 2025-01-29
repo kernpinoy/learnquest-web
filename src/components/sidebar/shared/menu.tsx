@@ -88,14 +88,16 @@ export default function Menu({ isAdmin = true }: MenuProps) {
                                 className="mb-1 h-10 w-full justify-start"
                                 asChild
                               >
-                                <Link href={href}>
-                                  <span
-                                    className={cn(
-                                      isOpen === false ? "" : "mr-4",
-                                    )}
-                                  >
-                                    <Icon size={18} />
-                                  </span>
+                                <Link href={href} prefetch={true}>
+                                  {Icon && ( // Only render the icon if it exists
+                                    <span
+                                      className={cn(
+                                        isOpen === false ? "" : "mr-4",
+                                      )}
+                                    >
+                                      <Icon size={18} />
+                                    </span>
+                                  )}
                                   <p
                                     className={cn(
                                       "max-w-[200px] truncate",

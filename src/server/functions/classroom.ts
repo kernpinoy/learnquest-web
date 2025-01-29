@@ -19,8 +19,13 @@ export async function getClassroomStudents(classCode: string) {
     .select({
       id: studentsInfo.id,
       lrn: users.username,
+      classroomId: studentsInfo.classroomId,
       fullName: studentFullName,
+      firstName: studentsInfo.firstName,
+      middleName: studentsInfo.middleName,
+      lastName: studentsInfo.lastName,
       sex: studentsInfo.gender,
+      archived: studentsInfo.archived,
       createdAt: studentsInfo.createdAt,
     })
     .from(studentsInfo)
@@ -29,4 +34,13 @@ export async function getClassroomStudents(classCode: string) {
     .orderBy(asc(studentsInfo.lastName));
 
   return students;
+}
+
+export async function getClassroomName(classCode: string) {
+  const result = await db.query.classrooms.findFirst({
+    where: eq(classrooms.classCode, classCode),
+    columns: { name: true },
+  });
+
+  return result!.name;
 }

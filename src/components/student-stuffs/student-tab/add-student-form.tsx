@@ -1,5 +1,5 @@
 import { useAction } from "next-safe-action/hooks";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { toast } from "sonner";
 import FormField from "~/components/custom/form-field";
 import { Button } from "~/components/ui/button";
@@ -75,6 +75,12 @@ export function StudentTabForm({
     form.reset();
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    if (!isOpen) {
+      form.reset();
+    }
+  }, [form, isOpen]);
 
   return (
     <>

@@ -29,8 +29,8 @@ interface ArchivedTeachersGridProps {
 function NoArchivedTeachers() {
   return (
     <ParagraphIsh>
-      <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-all text-xl font-medium tracking-tight text-center">
+      <div className="flex items-center justify-center overflow-hidden">
+        <p className="scroll-m-20 break-all text-center text-xl font-medium tracking-tight">
           There are no archived teacher accounts.
         </p>
       </div>
@@ -41,8 +41,8 @@ function NoArchivedTeachers() {
 function NoSearchResults() {
   return (
     <ParagraphIsh>
-      <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-words text-xl font-medium tracking-tight text-center">
+      <div className="flex items-center justify-center overflow-hidden">
+        <p className="scroll-m-20 break-words text-center text-xl font-medium tracking-tight">
           No archived teachers found matching your search criteria.
         </p>
       </div>
@@ -76,7 +76,7 @@ function ArchivedTeachersGrid({
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {filteredTeachers.map((teacher) => (
         <Card
-          className="transition-all hover:shadow-lg rounded-lg h-full flex flex-col"
+          className="flex h-full flex-col rounded-lg transition-all hover:shadow-lg"
           key={teacher.id}
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -88,18 +88,18 @@ function ArchivedTeachersGrid({
               teacherId={teacher.id}
             />
           </CardHeader>
-          <CardContent className="flex-grow flex flex-col justify-center">
+          <CardContent className="flex flex-grow flex-col justify-center">
             <div className="flex items-center space-x-4">
               <Avatar>
                 <AvatarFallback>
                   <User />
                 </AvatarFallback>
               </Avatar>
-              <div className="flex-grow min-w-0">
-                <div className="text-lg font-bold truncate">
+              <div className="min-w-0 flex-grow">
+                <div className="truncate text-lg font-bold">
                   {`${teacher.firstName} ${teacher.middleName} ${teacher.lastName}`}
                 </div>
-                <p className="text-sm text-muted-foreground truncate">
+                <p className="truncate text-sm text-muted-foreground">
                   Archived on{" "}
                   <time>
                     {teacher.archivedAt
@@ -136,7 +136,7 @@ export default function ArchivedTeachersArea() {
 
       router.replace(`${pathName}?${params.toString()}`);
     },
-    [searchParams, router]
+    [searchParams, router, pathName],
   );
 
   return (
@@ -171,7 +171,7 @@ export default function ArchivedTeachersArea() {
           exit={{ opacity: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         >
-          <div className="flex justify-between mb-4">
+          <div className="mb-4 flex justify-between">
             <Input
               className="w-72 lg:w-96"
               placeholder="Search archived teachers..."

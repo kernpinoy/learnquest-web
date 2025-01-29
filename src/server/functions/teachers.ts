@@ -1,6 +1,6 @@
 "use server";
 
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, and } from "drizzle-orm";
 import { getSalt, hashPassword } from "~/lib/hash";
 import { db } from "~/server/db";
 import {
@@ -32,6 +32,7 @@ export async function getTeacherInfo(userId: string) {
       firstName: teachersInfo.firstName,
       middleName: teachersInfo.middleName,
       lastName: teachersInfo.lastName,
+      userId: teachersInfo.userId,
     })
     .from(teachersInfo)
     .where(eq(teachersInfo.userId, userId));
@@ -43,7 +44,7 @@ export async function updateTeacherInfo(
   firstName: string,
   middleName: string,
   lastName: string,
-  userId: string
+  userId: string,
 ) {
   const result = await db
     .update(teachersInfo)
@@ -114,7 +115,7 @@ export async function getTeacherClassroom(userId: string) {
     .from(classrooms)
     .innerJoin(teachersInfo, eq(classrooms.teacherId, teachersInfo.id))
     .innerJoin(users, eq(users.id, teachersInfo.userId))
-    .where(eq(users.id, userId));
+    .where(and(eq(users.id, userId), eq(classrooms.archived, false)));
 
   return result;
 }

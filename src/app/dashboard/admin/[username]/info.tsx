@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import useUpdateTeacherInfoForm from "~/hooks/use-update-teacher-info-form";
-import { type UpdateTeacherInfo } from "~/lib/validation/update-teacher-info";
+import { type UpdateStudent } from "~/lib/validation/update-teacher-info";
 import { Card, CardContent } from "~/components/ui/card";
 import { useAction } from "next-safe-action/hooks";
 import { updateTeacherInfo } from "~/server/actions/update-teacher";
@@ -21,7 +21,7 @@ import { Loader2 } from "lucide-react";
 import { Input } from "~/components/ui/input";
 
 interface PersonalInfoFormProps {
-  teacherInfo: UpdateTeacherInfo;
+  teacherInfo: UpdateStudent;
 }
 
 export default function PersonalInfoForm({
@@ -56,8 +56,7 @@ export default function PersonalInfoForm({
     },
   });
 
-  function onSubmit(values: UpdateTeacherInfo) {
-    console.log(values);
+  function onSubmit(values: UpdateStudent) {
     execute(values);
   }
 
@@ -109,6 +108,12 @@ export default function PersonalInfoForm({
                   <FormMessage />
                 </FormItem>
               )}
+            />
+
+            <FormField
+              control={form.control}
+              name="userId"
+              render={({ field }) => <Input type="hidden" {...field} />}
             />
 
             <div className="flex justify-end">

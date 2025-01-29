@@ -13,6 +13,9 @@ import type { LoginForm } from "~/lib/validation/login";
 import { cn } from "~/lib/utils";
 import { useAction } from "next-safe-action/hooks";
 import { loginAccountAction } from "~/server/actions/login-account";
+import Logo from "~/components/Logo.svg";
+import PEL2_logo from "~/components/PEL2_logo.svg";
+import Image from "next/image";
 
 interface LoginFormUIProps extends HTMLAttributes<HTMLDivElement> {}
 
@@ -35,7 +38,8 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
       if (data?.success) {
         toast.dismiss();
         toast.success(data?.success, { duration: 1000, closeButton: false });
-        redirect(`/dashboard/${data?.redirectTo}`);
+        form.reset();
+        router.push(data.destination);
       }
     },
     onError({ error }) {
@@ -52,7 +56,7 @@ export default function LoginFormUI({ className, ...props }: LoginFormUIProps) {
     <>
       <div className={cn("grid gap-6", className)} {...props}>
         <section>
-          <h1 className="text-2xl font-semibold tracking-tight mb-2">Login</h1>
+          <h1 className="mb-2 text-2xl font-semibold tracking-tight">Login</h1>
           <p className="text-sm text-muted-foreground">
             Enter your username and password below <br />
             to log into your account

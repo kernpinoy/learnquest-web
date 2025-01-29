@@ -4,6 +4,6 @@ import { getTeacherDetails } from "~/server/functions/teachers";
 export function useGetTeacherDetails() {
   return useQuery({
     queryFn: async () => getTeacherDetails(),
-    queryKey: ["teachers-card"],
+    queryKey: ["admin-teachers-card"],
   });
 }

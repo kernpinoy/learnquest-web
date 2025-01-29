@@ -131,6 +131,7 @@ function ClassroomCard({
                     <Link
                       className="font-medium"
                       href={`${pathName}/${classCode}`}
+                      prefetch={true}
                     >
                       {name}
                     </Link>

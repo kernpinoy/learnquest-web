@@ -31,12 +31,12 @@ export default async function TeacherClassesPage({
 }) {
   const { username } = params;
 
+  console.log(username);
+
   const teacherFullName = await getTeacherFullName(username);
   const userId = await getUserId(username);
   const teacherInfo = await getTeacherInfo(userId!);
   const query = new QueryClient();
-
-  console.log(userId);
 
   await query.prefetchQuery({
     queryKey: ["teacher-classroom", userId],

@@ -15,7 +15,7 @@ export type Menu = {
   href: string;
   label: string;
   active: boolean;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   submenus: Submenu[];
 };
 
@@ -42,27 +42,11 @@ export function getAdminMenuList(pathname: string): Group[] {
       groupLabel: "",
       menus: [
         {
-          href: "",
+          href: "/dashboard/admin/archives",
           label: "Archives",
           active: pathname.includes("/dashboard/admin/archives"),
           icon: Archive,
-          submenus: [
-            {
-              href: "/dashboard/admin/archives/teacher",
-              label: "Teacher",
-              active: pathname === "/dashboard/admin/archives/teacher",
-            },
-            {
-              href: "/dashboard/admin/archives/class",
-              label: "Class",
-              active: pathname === "/dashboard/admin/archives/class",
-            },
-            {
-              href: "/dashboard/admin/archives/student",
-              label: "Student",
-              active: pathname === "/dashboard/admin/archives/student",
-            },
-          ],
+          submenus: [],
         },
       ],
     },

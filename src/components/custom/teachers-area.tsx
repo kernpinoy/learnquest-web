@@ -30,8 +30,8 @@ interface TeachersGridProps {
 function NoTeachers() {
   return (
     <ParagraphIsh>
-      <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-all text-xl font-medium tracking-tight text-center">
+      <div className="flex items-center justify-center overflow-hidden">
+        <p className="scroll-m-20 break-all text-center text-xl font-medium tracking-tight">
           There are no teachers accounts. Click the button below to add one.
         </p>
       </div>
@@ -45,8 +45,8 @@ function NoTeachers() {
 function NoSearchResults() {
   return (
     <ParagraphIsh>
-      <div className="overflow-hidden flex items-center justify-center">
-        <p className="scroll-m-20 break-words text-xl font-medium tracking-tight text-center">
+      <div className="flex items-center justify-center overflow-hidden">
+        <p className="scroll-m-20 break-words text-center text-xl font-medium tracking-tight">
           No teachers found matching your search criteria.
         </p>
       </div>
@@ -60,7 +60,7 @@ function TeachersGrid({ teachers, searchTerm }: TeachersGridProps) {
       (teacher) =>
         teacher.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         teacher.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        teacher.teacherId.toLowerCase().includes(searchTerm.toLowerCase())
+        teacher.teacherId.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [teachers, searchTerm]);
 
@@ -73,30 +73,31 @@ function TeachersGrid({ teachers, searchTerm }: TeachersGridProps) {
       {filteredTeachers.map(
         ({ fullName, createdAt, username, id, teacherId }) => (
           <Card
-            className="transition-all hover:shadow-lg rounded-lg hover:cursor-pointer h-full flex flex-col"
+            className="flex h-full flex-col rounded-lg transition-all hover:cursor-pointer hover:shadow-lg"
             key={id}
           >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Teacher</CardTitle>
               <TeacherActionsDropdown userId={id} teacherId={teacherId} />
             </CardHeader>
-            <CardContent className="flex-grow flex flex-col justify-center">
+            <CardContent className="flex flex-grow flex-col justify-center">
               <div className="flex items-center space-x-4">
                 <Avatar>
                   <AvatarFallback>
                     <User />
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-grow min-w-0">
-                  <div className="text-lg font-bold truncate">
+                <div className="min-w-0 flex-grow">
+                  <div className="truncate text-lg font-bold">
                     <Link
                       className="hover:underline"
                       href={`/dashboard/admin/${username}`}
+                      prefetch={true}
                     >
                       {fullName}
                     </Link>
                   </div>
-                  <p className="text-sm text-muted-foreground truncate">
+                  <p className="truncate text-sm text-muted-foreground">
                     Account created on{" "}
                     <time>{createdAt.toLocaleDateString()}</time>
                   </p>
@@ -104,7 +105,7 @@ function TeachersGrid({ teachers, searchTerm }: TeachersGridProps) {
               </div>
             </CardContent>
           </Card>
-        )
+        ),
       )}
     </div>
   );
@@ -129,7 +130,7 @@ export default function TeachersArea() {
 
       router.replace(`/dashboard/admin?${params.toString()}`);
     },
-    [searchParams, router]
+    [searchParams, router],
   );
 
   return (
@@ -164,7 +165,7 @@ export default function TeachersArea() {
           exit={{ opacity: 0 }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
         >
-          <div className="flex justify-between mb-4">
+          <div className="mb-4 flex justify-between">
             <Input
               className="w-72 lg:w-96"
               placeholder="Search..."

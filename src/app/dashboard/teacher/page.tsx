@@ -28,7 +28,7 @@ export default async function TeacherDashboardPage() {
   });
 
   return (
-    <ContentLayout title="Dashboard">
+    <ContentLayout title="Dashboard" isTeacher={true}>
       <HydrationBoundary state={dehydrate(query)}>
         <ClassroomArea userId={user.id} />
       </HydrationBoundary>

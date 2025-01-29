@@ -1,7 +1,8 @@
 "use client";
 
 import { useAction } from "next-safe-action/hooks";
-import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "sonner";
 import FormField from "~/components/custom/form-field";
 import { Button } from "~/components/ui/button";
@@ -31,13 +32,14 @@ export function DeleteStudentForm({
   lrn,
 }: DeleteStudentFormProps) {
   const form = useDeleteStudentForm(lrn);
+  const router = useRouter();
 
   const { execute, status } = useAction(deleteStudentAction, {
     onSuccess({ data }) {
-      if (data?.error) {
-        toast.dismiss();
-        toast.warning(data?.error, { duration: 2000, closeButton: false });
-      }
+      // if (data?.error) {
+      //   toast.dismiss();
+      //   toast.warning(data?.error, { duration: 2000, closeButton: false });
+      // }
 
       if (data?.success) {
         toast.dismiss();
@@ -51,6 +53,10 @@ export function DeleteStudentForm({
       toast.error(error.serverError, { duration: 2000, closeButton: false });
     },
   });
+
+  useEffect(() => {
+    form.reset({ studentId: lrn });
+  }, [lrn, form]);
 
   function onSubmit(values: DeleteStudent) {
     execute(values);
@@ -67,7 +73,8 @@ export function DeleteStudentForm({
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            This will delete the student's account and remove it from the list.
+            This will delete the student&apos;s account and remove it from the
+            list.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

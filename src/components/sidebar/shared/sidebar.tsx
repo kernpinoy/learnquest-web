@@ -8,35 +8,39 @@ import Link from "next/link";
 import { PanelsTopLeft } from "lucide-react";
 import AdminMenu from "./menu";
 
-export default function Sidebar({ isAdmin = true}: { isAdmin: boolean }) {
+export default function Sidebar({ isAdmin = true }: { isAdmin: boolean }) {
   const { isOpen } = useSidebar();
 
   return (
     <aside
       className={cn(
-        "fixed top-0 left-0 z-20 h-screen -translate-x-full lg:translate-x-0 transition-[width] ease-in-out duration-300",
-        isOpen === false ? "w-[90px]" : "w-72"
+        "fixed left-0 top-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0",
+        isOpen === false ? "w-[90px]" : "w-72",
       )}
     >
       <SidebarToggle />
 
-      <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
+      <div className="relative flex h-full flex-col overflow-y-auto px-3 py-4 shadow-md dark:shadow-zinc-800">
         <Button
           className={cn(
-            "transition-transform ease-in-out duration-300 mb-1",
-            isOpen === false ? "translate-x-1" : "translate-x-0"
+            "mb-1 transition-transform duration-300 ease-in-out",
+            isOpen === false ? "translate-x-1" : "translate-x-0",
           )}
           variant="link"
           asChild
         >
-          <Link href="/dashboard/admin" className="flex items-center gap-2">
-            <PanelsTopLeft className="w-6 h-6 mr-1" />
+          <Link
+            href="/dashboard/admin"
+            className="flex items-center gap-2"
+            prefetch={true}
+          >
+            <PanelsTopLeft className="mr-1 h-6 w-6" />
             <h1
               className={cn(
-                "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",
+                "whitespace-nowrap text-lg font-bold transition-[transform,opacity,display] duration-300 ease-in-out",
                 isOpen === false
-                  ? "-translate-x-96 opacity-0 hidden"
-                  : "translate-x-0 opacity-100"
+                  ? "hidden -translate-x-96 opacity-0"
+                  : "translate-x-0 opacity-100",
               )}
             >
               LearnQuest

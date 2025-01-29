@@ -9,7 +9,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { getClassroomStudents } from "~/server/functions/classroom";
+import {
+  getClassroomName,
+  getClassroomStudents,
+} from "~/server/functions/classroom";
+import { FileManager } from "~/components/upload-stuff/file-manager";
+import { getUploadedFiles } from "~/server/functions/uploads";
+import ClassroomSettings from "./classroom-settings";
 
 export default async function ClassManagementPage({
   params,
@@ -25,19 +31,25 @@ export default async function ClassManagementPage({
   }
 
   const queryClient = new QueryClient();
+  const name = getClassroomName(classCode);
 
-  await queryClient.prefetchQuery({
-    queryKey: ["teacher-classroom-students", classCode],
+  queryClient.prefetchQuery({
+    queryKey: ["teacher-classroom-file-uploads", classCode],
+    queryFn: async () => await getUploadedFiles(classCode),
+  });
+
+  queryClient.prefetchQuery({
     queryFn: async () => getClassroomStudents(classCode),
+    queryKey: ["teacher-classroom-students", classCode],
   });
 
   return (
-    <ContentLayout title="Classroom Files">
+    <ContentLayout title={await name} isTeacher={true}>
       <div className="min-h-screen">
         <GoBack />
-        <Tabs defaultValue="profile" className="w-full">
+        <Tabs defaultValue="students" className="w-full">
           <TabsList>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
+            <TabsTrigger value="students">Students</TabsTrigger>
             <TabsTrigger value="learningMaterials">
               Learning Materials
             </TabsTrigger>
@@ -46,15 +58,19 @@ export default async function ClassManagementPage({
               Classroom Settings
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="profile">
+          <TabsContent value="students">
             <HydrationBoundary state={dehydrate(queryClient)}>
               <StudentTab classCode={classCode} />
             </HydrationBoundary>
           </TabsContent>
-          <TabsContent value="learningMaterials">TODO: UPLOAD!</TabsContent>
+          <TabsContent value="learningMaterials">
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <FileManager classCode={classCode} />
+            </HydrationBoundary>
+          </TabsContent>
           <TabsContent value="leaderboard">TODO: LEADERBOARD!</TabsContent>
           <TabsContent value="classroomSettings">
-            TODO: ARCHIVE N DELETE
+            <ClassroomSettings classCode={classCode} />
           </TabsContent>
         </Tabs>
       </div>

@@ -6,7 +6,7 @@ import {
 import TeachersArea from "~/components/custom/teachers-area";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
 import { getTeacherDetails } from "~/server/functions/teachers";
-import { validateRequest } from "~/lib/validate-request"
+import { validateRequest } from "~/lib/validate-request";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {

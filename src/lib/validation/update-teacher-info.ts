@@ -10,7 +10,7 @@ export const updateTeacherInfoSchema = z.object({
         .trim()
         .split(" ")
         .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
         )
         .join(" ");
     }),
@@ -40,13 +40,14 @@ export const updateTeacherInfoSchema = z.object({
         .split(" ")
         .map((word) => {
           const lowerWord = word.toLowerCase();
-          if (["dela", "de", "van", "von"].includes(lowerWord)) {
+          if (["van", "von"].includes(lowerWord)) {
             return lowerWord;
           }
           return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
         })
         .join(" ");
     }),
+  userId: z.string(),
 });
 
 export type UpdateTeacherInfo = z.infer<typeof updateTeacherInfoSchema>;

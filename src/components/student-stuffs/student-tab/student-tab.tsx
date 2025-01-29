@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useGetClassroomStudents } from "~/data/use-get-classroom-students";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
@@ -22,7 +20,13 @@ function Loading() {
   );
 }
 
-export default function StudentTab({ classCode }: { classCode: string }) {
+export default function StudentTab({
+  classCode,
+  isAdmin = false,
+}: {
+  classCode: string;
+  isAdmin?: boolean;
+}) {
   const { data: students, isLoading } = useGetClassroomStudents(classCode);
 
   return (
@@ -31,7 +35,7 @@ export default function StudentTab({ classCode }: { classCode: string }) {
         <Loading />
       ) : (
         <DataTable
-          columns={columns as ColumnDef<unknown, unknown>[]}
+          columns={columns as unknown as ColumnDef<unknown, unknown>[]}
           data={students!}
           classCode={classCode}
         />

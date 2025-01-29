@@ -10,6 +10,7 @@ export const env = createEnv({
     MINIO_ACCESS_KEY: z.string(),
     MINIO_SECRET_KEY: z.string(),
     MINIO_LOCATION: z.string(),
+    MINIO_BUCKET: z.string(),
   },
   client: {},
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually

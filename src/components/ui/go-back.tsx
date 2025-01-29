@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "~/components/ui/button";
 
-export default function GoBack() {
+export default function GoBack({ link }: { link?: string }) {
   const router = useRouter();
 
   return (
@@ -12,7 +12,7 @@ export default function GoBack() {
       <Button
         variant="ghost"
         className="flex items-center gap-2"
-        onClick={() => router.back()}
+        onClick={() => (link ? router.push(link) : router.back())} // Updated logic for navigation
       >
         <ArrowLeft className="h-4 w-4" />
         Go Back

@@ -44,12 +44,19 @@ export const loginAccountAction = loginAction
           timeCost: 2,
           outputLen: 32,
           parallelism: 1,
-        }
+        },
       );
 
       // Handle invalid password
       if (!validPassword) {
         return { error: "Invalid username or password. Try again." };
+      }
+
+      if (existingUser.archived) {
+        return {
+          error:
+            "User has already been archived. Contact your administrator for unarchival.",
+        };
       }
 
       // Create session if login is successful
@@ -60,12 +67,12 @@ export const loginAccountAction = loginAction
       (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes
+        sessionCookie.attributes,
       );
 
       return {
         success: "Logged in successfully.",
-        redirectTo: `${existingUser.role}`,
+        destination: `/dashboard/${existingUser?.role}`,
       };
     } catch (error) {
       return { error: "Something went wrong. Please try again later." };
