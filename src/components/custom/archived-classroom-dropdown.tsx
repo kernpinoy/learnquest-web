@@ -11,31 +11,34 @@ import {
 import { Button } from "~/components/ui/button";
 import { ArchiveRestore, Trash2, MoreVertical } from "lucide-react";
 import { useState } from "react";
+import { UnarchiveClassroom } from "./unarchive-classroom";
+import { DeleteClassroomForm } from "../classroom/delete-classroom-form";
 // import DeleteClassroom from "./delete-classroom"; // Adjust the component for deleting a classroom
-// import UnarchiveClassroom from "./unarchive-classroom"; // Adjust the component for unarchiving a classroom
 
 interface ArchivedClassroomActionsDropdownProps {
   classroomId: string;
+  classCode: string;
 }
 
 export default function ArchivedClassroomActionsDropdown({
   classroomId,
+  classCode,
 }: ArchivedClassroomActionsDropdownProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isUnarchiveOpen, setIsUnarchiveOpen] = useState(false);
 
   return (
     <>
-      {/* <UnarchiveClassroom
-        open={isUnarchiveOpen}
+      <UnarchiveClassroom
+        isOpen={isUnarchiveOpen}
         onOpenChange={setIsUnarchiveOpen}
         classroomId={classroomId}
       />
-      <DeleteClassroom
-        open={isDeleteOpen}
+      <DeleteClassroomForm
+        isOpen={isDeleteOpen}
         onOpenChange={setIsDeleteOpen}
-        classroomId={classroomId}
-      /> */}
+        classCode={classCode}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

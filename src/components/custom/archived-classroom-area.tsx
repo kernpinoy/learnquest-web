@@ -14,6 +14,7 @@ import ArchivedClassroomActionsDropdown from "./archived-classroom-dropdown"; //
 
 interface ArchivedClassroom {
   id: string; // Classroom ID
+  classCode: string;
   name: string; // Classroom Name
   archivedAt: Date | null; // Allow archivedAt to be null
 }
@@ -78,7 +79,10 @@ function ArchivedClassroomsGrid({
             <CardTitle className="text-sm font-medium">
               Archived Classroom
             </CardTitle>
-            <ArchivedClassroomActionsDropdown classroomId={classroom.id} />
+            <ArchivedClassroomActionsDropdown
+              classroomId={classroom.id}
+              classCode={classroom.classCode}
+            />
           </CardHeader>
           <CardContent className="flex flex-grow flex-col justify-center">
             <div className="flex items-center space-x-4">

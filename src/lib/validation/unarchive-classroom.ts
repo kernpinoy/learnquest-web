@@ -1,16 +1,8 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-export const archiveClassroomFormSchema = z.object({
-  teacherId: z.string().min(1, "User ID must be present"),
+// Step 1: Define the validation schema for unarchiving a classroom
+export const unarchiveClassroomSchema = z.object({
+  classroomId: z.string(),
 });
 
-export type ArchiveClassroom = z.infer<typeof archiveClassroomFormSchema>;
-
-export const resolver = zodResolver(archiveClassroomFormSchema);
-
-export const defaultValues = (teacherId: string): ArchiveClassroom => {
-  return {
-    teacherId: teacherId,
-  };
-};
+export type UnarchiveClassroom = z.infer<typeof unarchiveClassroomSchema>;
