@@ -12,6 +12,8 @@ import { getTeacher } from "~/server/functions/teachers";
 export default async function ArchivePage() {
   const { session, user } = await validateRequest();
 
+  console.log(session, user);
+
   if (!session && !user) {
     redirect("/");
   }
