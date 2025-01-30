@@ -50,7 +50,7 @@ export async function getSignedUrl(
   const putObject = await minioClient.presignedPutObject(
     env.MINIO_BUCKET,
     randoName,
-    5 * 1000,
+    24 * 60 * 60,
   );
 
   const classroom = await db.query.classrooms.findFirst({
