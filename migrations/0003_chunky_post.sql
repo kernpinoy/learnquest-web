@@ -1,0 +1,1 @@
+ALTER TABLE "classrooms" DROP COLUMN IF EXISTS "school_year";

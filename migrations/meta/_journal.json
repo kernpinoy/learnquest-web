@@ -1,0 +1,90 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1725679838004,
+      "tag": "0000_known_green_goblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726093815579,
+      "tag": "0001_legal_gwen_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726124388742,
+      "tag": "0002_outstanding_marrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1726124702309,
+      "tag": "0003_chunky_post",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1726125327846,
+      "tag": "0004_closed_hobgoblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1726728358914,
+      "tag": "0005_glossy_wrecker",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1727244684733,
+      "tag": "0006_overconfident_terrax",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1728603682810,
+      "tag": "0007_nebulous_microchip",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1728604106311,
+      "tag": "0008_tidy_green_goblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1730811185605,
+      "tag": "0009_fantastic_the_hand",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1731036708766,
+      "tag": "0010_marvelous_richard_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1733210189941,
+      "tag": "0011_slow_stryfe",
+      "breakpoints": true
+    }
+  ]
+}
