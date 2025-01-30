@@ -3,9 +3,9 @@
 import { useForm } from "react-hook-form";
 import {
   resolver,
-  type UpdateStudent,
+  type UpdateTeacherInfo,
 } from "~/lib/validation/update-teacher-info";
 
-export default function useUpdateTeacherInfoForm(values?: UpdateStudent) {
-  return useForm<UpdateStudent>({ resolver, defaultValues: values });
+export default function useUpdateTeacherInfoForm(values?: UpdateTeacherInfo) {
+  return useForm<UpdateTeacherInfo>({ resolver, defaultValues: values });
 }

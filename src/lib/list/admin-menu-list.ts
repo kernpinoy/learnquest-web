@@ -15,7 +15,7 @@ export type Menu = {
   href: string;
   label: string;
   active: boolean;
-  icon?: LucideIcon;
+  icon: LucideIcon;
   submenus: Submenu[];
 };
 

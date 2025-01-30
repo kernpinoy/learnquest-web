@@ -3,6 +3,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 import ArchivedTeacherArea from "~/components/custom/archived-teacher-area";
 import ContentLayout from "~/components/sidebar/shared/content-layout";
 import GoBack from "~/components/ui/go-back";
@@ -19,7 +20,9 @@ export default function ArchiveTeacherPage() {
   return (
     <ContentLayout title="Archives">
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <ArchivedTeacherArea />
+        <Suspense>
+          <ArchivedTeacherArea />
+        </Suspense>
       </HydrationBoundary>
     </ContentLayout>
   );
