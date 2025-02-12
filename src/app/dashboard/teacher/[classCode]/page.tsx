@@ -60,7 +60,6 @@ export default async function ClassManagementPage({
             <TabsTrigger value="learningMaterials">
               Learning Materials
             </TabsTrigger>
-            <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
             <TabsTrigger value="classroomSettings">
               Classroom Settings
             </TabsTrigger>

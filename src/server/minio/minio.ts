@@ -7,4 +7,6 @@ export const minioClient = new Minio.Client({
   accessKey: env.MINIO_ACCESS_KEY,
   secretKey: env.MINIO_SECRET_KEY,
   region: env.MINIO_LOCATION,
+  port:
+    env.NODE_ENV === "development" ? Number(process.env.MINIO_PORT) : undefined,
 });
