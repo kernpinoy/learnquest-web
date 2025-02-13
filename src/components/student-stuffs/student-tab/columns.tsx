@@ -128,12 +128,12 @@ function StudentActionsDropdown(student: Student) {
             {student.archived ? (
               <>
                 <ArchiveRestore className="mr-2 h-4 w-4" />
-                <span>Unarchive Student</span>
+                <span>Make student active</span>
               </>
             ) : (
               <>
                 <Archive className="mr-2 h-4 w-4" />
-                <span>Archive Student</span>
+                <span>Make student inactive</span>
               </>
             )}
           </DropdownMenuItem>
@@ -215,7 +215,7 @@ export const columns: ColumnDef<Student>[] = [
           className="p-0"
           onClick={() => column.toggleSorting(direction === "asc")}
         >
-          Archived
+          Inactive
           {direction === "asc" ? (
             <MoveDown className="ml-2 h-4 w-4" />
           ) : (
